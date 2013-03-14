@@ -18,6 +18,11 @@ public class WriteFile {
 	private int fragmentSize;
 	private String fileName;
 	private int index = 0;
+	private final static String doc = "doc";
+	private final static String excel = "xls";
+	private final static String pdf = "pdf";
+	private String currentFolder;
+	
 
 	public WriteFile(Map<byte[], Float> fragments,
 			List<LinkedHashMap<Byte, Integer>> fragmentStats, FileInfo info) {
@@ -29,9 +34,10 @@ public class WriteFile {
 	}
 
 	private void setFileInfo() {
-		fileType = info.getType();
+		fileType = info.getType().toLowerCase();
 		fragmentSize = info.getSize();
 		fileName = info.getName();
+		setFolder(fileType);
 	}
 
 	public void produceOutput() {
@@ -48,11 +54,11 @@ public class WriteFile {
 	private void save(byte[] fragment, float percentage,
 			LinkedHashMap<Byte, Integer> stats) {
 		NumberFormat formatter = new DecimalFormat("#0.00");
-		String name = fileName + index + "_" + fragmentSize + "_"
-				+ formatter.format(percentage) + "." + fileType  + ".ext";
+		String name = fileName + "_" + index + "_" + fragmentSize + "_"
+				+ formatter.format(percentage) + "_" + fileType  + ".ext";
 		
-	 String path = "/home/jahn/Desktop/thesis_workspace/doc/fragments/" + name;
-		//final String path = "src/nl/cwi/fragmentor/io/outputdata/" + name;
+	    String path = "/home/jahn/Desktop/thesis_workspace/"+ currentFolder+ "/fragments/" + name;
+		
 
 		try {
 			FileWriter fstream = new FileWriter(path);
@@ -100,6 +106,25 @@ public class WriteFile {
 		}
 
 		return content + '\n' + '\n';
+	}
+	
+	private void setFolder(String type) {
+	
+		switch (type) {
+			case excel:
+				currentFolder = excel;
+				break;
+			case doc:
+				currentFolder = doc;
+				break;
+			case pdf:
+				currentFolder = pdf;
+				break;
+			default:
+				break;
+
+		}
+
 	}
 
 }

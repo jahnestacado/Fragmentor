@@ -9,21 +9,15 @@ import nl.cwi.fragmentor.io.WriteFile;
 
 public class Main {
 
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
 	
-			
+	public static void main(String[] args) {
 			FilePath paths = new FilePath();
-			for(String s:paths.getAllPaths()){
-				create(s);
+			for(String path:paths.getAllPaths()){
+				fragmentation(path);
 			}
-		
-
 	}
 	
-	private static void create(String path){
+	private static void fragmentation(String path){
 		try {
 		ReadFile reader = new ReadFile(path);
 		FileInfo info = new FileInfo();
@@ -39,8 +33,7 @@ public class Main {
 		write.produceOutput();
 	}
 	 catch (IOException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
+		System.out.println("jjjj");
 	}
 
 }

@@ -9,8 +9,8 @@ public class FragmentFiltering {
 	private final List<LinkedHashMap<Byte, Integer>> instanceCounter;
 	private final List<LinkedHashMap<Byte, Integer>> qualifiedFragmentStats;
 	private final List<byte[]> initFragments;
-	private final Map<byte[],Float> qualifiedFragments;
-	private final static int PERCENTAGE_THRESHOLD = 80;
+	private final Map<byte[], Float> qualifiedFragments;
+	private final static float PERCENTAGE_THRESHOLD = 85.00f;
 	private final static byte NEWLINE = 10;
 	private final static byte TAB = 9;
 	private final static byte CARRIAGE_RETURN = 13;
@@ -27,11 +27,13 @@ public class FragmentFiltering {
 		printableChars.add(CARRIAGE_RETURN);
 	}
 
-	public FragmentFiltering(List<LinkedHashMap<Byte, Integer>> instanceCounter,List<byte[]> initFragments) {
+	public FragmentFiltering(
+			List<LinkedHashMap<Byte, Integer>> instanceCounter,
+			List<byte[]> initFragments) {
 		this.instanceCounter = instanceCounter;
 		this.initFragments = initFragments;
 		this.qualifiedFragmentStats = new ArrayList<LinkedHashMap<Byte, Integer>>();
-		this.qualifiedFragments = new LinkedHashMap<byte[],Float>();
+		this.qualifiedFragments = new LinkedHashMap<byte[], Float>();
 		filtering();
 
 	}
@@ -53,9 +55,10 @@ public class FragmentFiltering {
 
 			}
 			float percentage = getRatio(totalBytes, numOfInstances);
-			if (percentage>=PERCENTAGE_THRESHOLD) {
+			if (percentage >= PERCENTAGE_THRESHOLD) {
 				qualifiedFragmentStats.add(fragmentMap);
-				qualifiedFragments.put(initFragments.get(fragmentIndex),percentage);
+				qualifiedFragments.put(initFragments.get(fragmentIndex),
+						percentage);
 			}
 			fragmentIndex++;
 		}
@@ -65,16 +68,17 @@ public class FragmentFiltering {
 	public List<LinkedHashMap<Byte, Integer>> getQualifiedFragmentStats() {
 		return qualifiedFragmentStats;
 	}
-	
-	public Map<byte[],Float> getQualifiedFragments() {
+
+	public Map<byte[], Float> getQualifiedFragments() {
 		return qualifiedFragments;
 	}
 
 	public static float getRatio(int total, int frequency) {
-		//System.out.println("**"+total+"**"+" **+"+frequency+"**");
-		if (frequency == 0) return 0;
-		float percentage = frequency* 100.0f/total;
-		//System.out.println("result  :"+percentage);
+		// System.out.println("**"+total+"**"+" **+"+frequency+"**");
+		if (frequency == 0)
+			return 0;
+		float percentage = frequency * 100.0f / total;
+		// System.out.println("result  :"+percentage);
 		return percentage;
 	}
 
