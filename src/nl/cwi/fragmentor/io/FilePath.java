@@ -6,7 +6,7 @@ import java.util.List;
 
 public class FilePath {
 	private final List<String> paths;
-	private final static String MAIN_FOLDER = "/home/jahn/Desktop/thesis_workspace/";
+	private final static String MAIN_FOLDER = "/home/jahn/Desktop/thesis/";
 	private final static String OUTPUT_FOLDER = "fragments";
 
 	public FilePath() {

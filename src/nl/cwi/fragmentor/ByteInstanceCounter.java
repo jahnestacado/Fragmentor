@@ -5,31 +5,52 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 public class ByteInstanceCounter {
-	private final ArrayList<LinkedHashMap<Byte, Integer>> mapper = new ArrayList<LinkedHashMap<Byte, Integer>>();
-	private final List<byte[]> fragments;
+	private final ArrayList<LinkedHashMap<Integer, Integer>> mapper = new ArrayList<LinkedHashMap<Integer, Integer>>();
+	// Integer key in map is the unsigned value of a byte
+	private final LinkedHashMap<Integer, Integer> instanceCounter = new LinkedHashMap<Integer, Integer>();
+	private final List<Integer[]> fragments;
+	private final static Integer NEWLINE = 10;
+	private final static Integer TAB = 9;
+	private final static Integer CARRIAGE_RETURN = 13;
+	private final static List<Integer> printableChars = new ArrayList<Integer>();
 
-	public ByteInstanceCounter(List<byte[]> fragments) {
+	// initialize array content comprised of all printables byte characters
+	// +plus
+	// newline, tab and carriage_return
+	static {
+		for (int i = 36; i <= 126; i++) {
+			printableChars.add(i);
+		}
+		printableChars.add(NEWLINE);
+		printableChars.add(TAB);
+		printableChars.add(CARRIAGE_RETURN);
+	}
+
+	public ByteInstanceCounter(List<Integer[]> fragments) {
 		this.fragments = fragments;
 		setCounter();
 	}
 
-	private void setCounter() {
-		for (byte[] fragment : fragments) {
-			LinkedHashMap<Byte, Integer> instanceCounter = new LinkedHashMap<Byte, Integer>();
-			for (int z = 0; z <= fragment.length - 1; z++) {
-				if (instanceCounter.containsKey(fragment[z])) {
-					int newValue = instanceCounter.get(fragment[z]) + 1;
-					instanceCounter.put(fragment[z], newValue);
-				} else
-					instanceCounter.put(fragment[z], 1);
-
-			}
-			mapper.add(instanceCounter);
+	private void initCounter() {
+		for (int i = 0; i <= printableChars.size() - 1; i++) {
+			instanceCounter.put(printableChars.get(i), 0);
 		}
 
 	}
 
-	public List<LinkedHashMap<Byte, Integer>> getCounter() {
+	private void setCounter() {
+	
+		for (Integer[] fragment : fragments) {
+			initCounter();
+			for (int z = 0; z <= fragment.length - 1; z++) {
+				int newValue = (instanceCounter.get(fragment[z]) + 1);
+				instanceCounter.put(fragment[z], newValue);
+			}
+			mapper.add(instanceCounter);
+		}
+	}
+
+	public List<LinkedHashMap<Integer, Integer>> getStats() {
 		return mapper;
 	}
 
