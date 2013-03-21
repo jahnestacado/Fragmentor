@@ -3,7 +3,6 @@ package nl.cwi.fragmentor;
 import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import nl.cwi.fragmentor.io.FilePath;
 import nl.cwi.fragmentor.io.ReadFile;
@@ -16,7 +15,6 @@ public class Main {
 			FilePath paths = new FilePath();
 			for(String path:paths.getAllPaths()){
 				fragmentation(path);
-				
 			}
 	}
 	
@@ -37,15 +35,7 @@ public class Main {
 		    ByteInstanceCounter counter = new ByteInstanceCounter(filteredFragments);
 		    List<LinkedHashMap<Integer, Integer>> stats = counter.getStats();
 		    
-		    Map<Integer, Integer> tt = stats.get(0);
-		    System.out.println(ratios.get(0));
-		    for(Integer i : tt.keySet()){
-		    	
-		    System.out.println(i + ": "+tt.get(i));
-		    }
-		    System.out.println("#####################################");
-			
-			WriteFile write = new WriteFile(filteredFragments,ratios, info);
+			WriteFile write = new WriteFile(filteredFragments,ratios, info,stats);
 			write.produceOutput();
 		} catch (IOException e) {
 			System.out.println(e.getMessage());

@@ -12,8 +12,8 @@ public class FragmentFiltering {
 	private final static List<Integer> printableChars = new ArrayList<Integer>();
 	private final static int FRAGMENT_SIZE = 512;
 
-	// initialize array content comprised of all printables byte characters +
-	// newline, tab and carriage_return
+	//** initialize array content comprised of all printables byte characters +
+	//** newline, tab and carriage_return
 	static {
 		for (int i = 36; i <= 126; i++) {
 			printableChars.add(i);

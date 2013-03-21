@@ -11,7 +11,7 @@ import nl.cwi.fragmentor.FileInfo;
 
 public class WriteFile {
 	private final List<Integer[]> fragments;
-	private  List<LinkedHashMap<Integer, Integer>> fragmentStats;
+	private final List<LinkedHashMap<Integer, Integer>> fragmentStats;
 	private final FileInfo info;
 	private String fileType;
 	private int fragmentSize;
@@ -22,13 +22,15 @@ public class WriteFile {
 	private final static String pdf = "pdf";
 	private String currentFolder;
 	private final List<Float> ratios;
+	private String path;
 	
 
 
 	
-	public WriteFile(List<Integer[]> fragments, List<Float> ratios, FileInfo info) {
+	public WriteFile(List<Integer[]> fragments, List<Float> ratios, FileInfo info,List<LinkedHashMap<Integer, Integer>> fragmentStats) {
 		this.fragments = fragments;
 		this.ratios = ratios;
+		this.fragmentStats = fragmentStats;
 		this.info = info;
 		setFileInfo();
 
@@ -43,41 +45,34 @@ public class WriteFile {
 	}
 
 	public void produceOutput() {
-		int fragmentNum = 0;
+	
 		for (int i=0; i<= fragments.size()-1; i++) {
 			float percentage = ratios.get(i);
 			Integer[] fragment = fragments.get(i);
-			
-			saveContent(fragment, percentage);
-			fragmentNum++;
+			definePath(percentage);
+			saveContent(fragment);
+			saveStats(fragmentStats.get(index));
 		}
 
 	}
 	
-	private void saveContent(Integer[] fragment, float percentage) {
+	private void definePath(float percentage){
 		NumberFormat formatter = new DecimalFormat("#0.00");
 		String name = fileName + "_" + index + "_" + fragmentSize + "_"
 				+ formatter.format(percentage) + "_" + fileType + ".ext";
 
-		String path1 = "/home/jahn/Desktop/thesis/" + currentFolder
+		this.path = "/home/jahn/Desktop/thesis/" + currentFolder
 				+ "/fragments/" + name;
-		lineByLineWrite(path1, fragment);
+		
+	}
+	
+	private void saveContent(Integer[] fragment) {
+		lineByLineWrite(path, fragment);
 	}
 
-	private void save(Integer[] fragment, float percentage,
-			LinkedHashMap<Integer, Integer> stats) {
-		NumberFormat formatter = new DecimalFormat("#0.00");
-		String name1 = fileName + "_" + index + "_" + fragmentSize + "_"
-				+ formatter.format(percentage) + "_" + fileType  + ".ext";
-		String name2 = fileName + "_" + index + "_" + fragmentSize + "_"
-				+ formatter.format(percentage) + "_" + fileType  + ".stats";
-	    String path1 = "/home/jahn/Desktop/thesis/"+ currentFolder+ "/fragments/" + name1;
-	    String path2 = "/home/jahn/Desktop/thesis/"+ currentFolder+ "/fragments/" + name2;
-
-	    lineByLineWrite(path1, fragment);
-	    statsWrite(path2,stats);
-	  
-
+	private void saveStats(LinkedHashMap<Integer, Integer> stats) {
+        path += ".stats";
+	    writeStats(path,stats);
 	}
 	
 	
@@ -89,7 +84,6 @@ public class WriteFile {
 			FileWriter fstream = new FileWriter(path);
 			BufferedWriter out = new BufferedWriter(fstream);
 			out.write(fragmentToStringLineByLine(fragment));
-			index++;
 			out.close();
 		} catch (Exception e) {
 			System.out.println("Error: " + e.getMessage());
@@ -98,16 +92,20 @@ public class WriteFile {
 	}
 	
 	
-	private void statsWrite(String path,LinkedHashMap<Integer, Integer> stats){
+	private void writeStats(String path,LinkedHashMap<Integer, Integer> stats){
 		try {
 			FileWriter fstream = new FileWriter(path);
 			BufferedWriter out = new BufferedWriter(fstream);
 			out.write(fragmentStats(stats));
-			index++;
+			increaseFileCounter();
 			out.close();
 		} catch (Exception e) {
 			System.out.println("Error: " + e.getMessage());
 		}
+	}
+	
+	private void increaseFileCounter(){
+		index++;
 	}
 	
 
