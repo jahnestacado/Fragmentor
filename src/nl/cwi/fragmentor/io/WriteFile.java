@@ -50,7 +50,7 @@ public class WriteFile {
 			float percentage = ratios.get(i);
 			Integer[] fragment = fragments.get(i);
 			definePath(percentage);
-			saveContent(fragment);
+			//saveContent(fragment);
 			saveStats(fragmentStats.get(index));
 		}
 

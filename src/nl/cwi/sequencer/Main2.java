@@ -20,7 +20,7 @@ public class Main2 {
 	
 	
 	private static void sequencer(String path) {
-		try {
+		/*try {
 			ReadFile reader = new ReadFile(path);
 			FragmentFactory factory = new FragmentFactory(reader.fileToBytes());
             List<byte[]> fragments = factory.getFileFragments();
@@ -35,7 +35,7 @@ public class Main2 {
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
 		}
-
+		 */
 	}
 	
 	
