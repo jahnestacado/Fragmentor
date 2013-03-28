@@ -6,12 +6,11 @@ import java.util.List;
 
 public class FilePath {
 	private final List<String> paths;
-	private final static String MAIN_FOLDER = "/home/jahn/Desktop/thesis/";
 	private final static String OUTPUT_FOLDER = "fragments";
 
-	public FilePath() {
+	public FilePath(String path) {
 		paths = new ArrayList<String>();
-		setPaths(MAIN_FOLDER);
+		setPaths(path);
 	}
 
 	private void setPaths(String path) {

@@ -14,7 +14,6 @@ public class ReadFile {
 	public ReadFile(String location) throws IOException{
 		this.location = location;
 		this.path = Paths.get(location);
-		fileToBytes();
 	}
 	
 	public byte[] fileToBytes() throws IOException{

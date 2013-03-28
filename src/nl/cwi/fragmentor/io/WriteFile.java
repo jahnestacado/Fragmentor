@@ -71,14 +71,14 @@ public class WriteFile {
 	}
 
 	private void saveStats(LinkedHashMap<Integer, Integer> stats) {
-        path += ".stats";
+        path += ".score";
 	    writeStats(path,stats);
 	}
 	
 	
 	
 	
-	// writes all bytes line-per-line
+	// writes all bytes line-by-line
 	private void lineByLineWrite(String path,Integer[] fragment){
 		try {
 			FileWriter fstream = new FileWriter(path);
