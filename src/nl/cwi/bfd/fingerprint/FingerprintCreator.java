@@ -1,14 +1,15 @@
-package nl.cwi.bfa.fingerprint;
+package nl.cwi.bfd.fingerprint;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import nl.cwi.bfa.fingerprint.io.reader.FragmentReader;
+import nl.cwi.bfd.fingerprint.io.reader.FragmentReader;
+import nl.cwi.bfd.fingerprint.writer.SaveFingerprint;
 import nl.cwi.fragmentor.io.FilePath;
 
-public class Main {
+public class FingerprintCreator {
 	private final static String MAIN_FOLDER = "/home/jahn/Desktop/thesis/pdf/fragments/";
 
 	public static void main(String[] args) throws IOException {
@@ -19,19 +20,8 @@ public class Main {
 		}
 		float[] avgScore =AVGScore.getFreqFingerprint(normalizedScores);
 		CorrelationFactor factors = new CorrelationFactor(normalizedScores, avgScore);
-		float[] correlationStrength = AVGScore.getCorrelationStrengthFingerprint(factors.getCorrFactors());
-		
-		
-		float[] df = avgScore;
-		for(float j : df){
-			System.out.println(j);
-		}
-		
-		System.out.println("****************");
-		df = correlationStrength;
-		for(float j : df){
-			System.out.println(j);
-		}
+		float[] corrStrengthScore = AVGScore.getCorrelationStrengthFingerprint(factors.getCorrFactors());
+	    SaveFingerprint.writeToFile(avgScore, corrStrengthScore);
 		
 	
 	}

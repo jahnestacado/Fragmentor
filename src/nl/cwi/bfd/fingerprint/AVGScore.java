@@ -1,13 +1,14 @@
-package nl.cwi.bfa.fingerprint;
+package nl.cwi.bfd.fingerprint;
 
 import java.util.List;
 import java.util.Map;
 
 public class AVGScore {
+	private final static int arraySize = 94;
 	
 	
 	public static float[] getFreqFingerprint(List<Map<String, Float>> compoundNormalizedFreqs){
-		float[] avgScores = new float[94];
+		float[] avgScores = new float[arraySize];
 		for(int i=0;i<= compoundNormalizedFreqs.size()-1; i++){
 			int prevNumOfFiles = i;
 			float[] newFileScore = valuesToArray(compoundNormalizedFreqs.get(i));
@@ -18,7 +19,7 @@ public class AVGScore {
 	}
 	
 	public static float[] getCorrelationStrengthFingerprint(List<float[]> correlationFactors){
-		float[] avgScores = new float[94];
+		float[] avgScores = new float[arraySize];
 		for(int i=0;i<= correlationFactors.size()-1; i++){
 			int prevNumOfFiles = i;
 			float[] temp = addArrays(mulArrayElementsWith(avgScores,prevNumOfFiles), correlationFactors.get(i));

@@ -45,7 +45,6 @@ public class WriteFile {
 	}
 
 	public void produceOutput() {
-	
 		for (int i=0; i<= fragments.size()-1; i++) {
 			float percentage = ratios.get(i);
 			Integer[] fragment = fragments.get(i);

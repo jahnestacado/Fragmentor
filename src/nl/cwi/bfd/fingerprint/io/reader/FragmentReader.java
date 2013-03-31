@@ -1,4 +1,4 @@
-package nl.cwi.bfa.fingerprint.io.reader;
+package nl.cwi.bfd.fingerprint.io.reader;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -20,6 +20,8 @@ public class FragmentReader {
 		reader.close();
 		return freqMapper;
 	}
+	
+
 	
 	public static String[] parseLine(String line){
 		String[] dataOfLine = line.split(":");

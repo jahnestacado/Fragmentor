@@ -1,4 +1,4 @@
-package nl.cwi.bfa.fingerprint;
+package nl.cwi.bfd.fingerprint;
 
 import java.util.Collections;
 import java.util.LinkedHashMap;
