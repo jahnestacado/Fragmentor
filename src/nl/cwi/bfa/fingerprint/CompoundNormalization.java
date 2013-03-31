@@ -10,9 +10,9 @@ public class CompoundNormalization {
 	
 	public static Map<String, Float> getNormalizedFreqs(Map<String, Float> normalizedFreqs) {
 		for (String byteId : normalizedFreqs.keySet()) {
-			float value = normalizedFreqs.get(byteId);
-			float β = 1.5f;
-			float compoundNormalizedValue = (float) Math.pow(value, ( 1 / β));
+			double value = normalizedFreqs.get(byteId);
+			double β = 1.5f;
+			float compoundNormalizedValue =  (float) Math.pow(value, ( 1 / β));
 			normalizedFreqs.put(byteId, compoundNormalizedValue);
 		}
 

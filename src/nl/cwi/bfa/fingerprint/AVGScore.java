@@ -3,30 +3,28 @@ package nl.cwi.bfa.fingerprint;
 import java.util.List;
 import java.util.Map;
 
-public class FPScore {
-	private float[] FPS;
-	private final List<Map<String, Float>> compoundNormalizedFreqs;
-	private final int size;
+public class AVGScore {
 	
-	public FPScore(List<Map<String, Float>> compoundNormalizedFreqs){
-		this.compoundNormalizedFreqs = compoundNormalizedFreqs;
-		size = compoundNormalizedFreqs.size();
-		FPS = new float[94];
-		createFingerprint();
-	}
 	
-	private void createFingerprint(){
-		for(int i=0;i<= size-1; i++){
+	public static float[] getFreqFingerprint(List<Map<String, Float>> compoundNormalizedFreqs){
+		float[] avgScores = new float[94];
+		for(int i=0;i<= compoundNormalizedFreqs.size()-1; i++){
 			int prevNumOfFiles = i;
 			float[] newFileScore = valuesToArray(compoundNormalizedFreqs.get(i));
-			float[] temp = addArrays(mulArrayElementsWith(FPS,prevNumOfFiles), newFileScore);
-			FPS = divArrayElementsWith(temp , prevNumOfFiles);
-			
+			float[] temp = addArrays(mulArrayElementsWith(avgScores,prevNumOfFiles), newFileScore);
+			avgScores = divArrayElementsWith(temp , prevNumOfFiles);
 		}
-		System.out.println("*********************");
-		for(int y = 0;y<=93;y++){
-            System.out.print(FPS[y]+",");}
-		System.out.println("*********************");
+		return avgScores;
+	}
+	
+	public static float[] getCorrelationStrengthFingerprint(List<float[]> correlationFactors){
+		float[] avgScores = new float[94];
+		for(int i=0;i<= correlationFactors.size()-1; i++){
+			int prevNumOfFiles = i;
+			float[] temp = addArrays(mulArrayElementsWith(avgScores,prevNumOfFiles), correlationFactors.get(i));
+			avgScores = divArrayElementsWith(temp , prevNumOfFiles);
+		}
+		return avgScores;
 	}
 	
 	public static float[] mulArrayElementsWith(float[] array, int numOfFiles){
@@ -52,7 +50,7 @@ public class FPScore {
 		return currentArray;
 	}
 	
-	private static float[] valuesToArray(Map<String, Float> compoundNormalizedFreqs){
+	public static float[] valuesToArray(Map<String, Float> compoundNormalizedFreqs){
 		float[] array = new float[94];
 		int index = 0;
 		for(String key : compoundNormalizedFreqs.keySet()){
@@ -61,9 +59,7 @@ public class FPScore {
 		return array;
 	}
 	
-	public float[] getFPS(){
-		return FPS;
-	}
+	
 	
 	
 	
