@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-import nl.cwi.fragmentor.io.FilePath;
+import nl.cwi.fragmentor.io.FragmentFilePath;
 import nl.cwi.fragmentor.io.ReadFile;
 import nl.cwi.fragmentor.io.WriteFile;
 
@@ -12,7 +12,7 @@ public class Main {
 	private final static String MAIN_FOLDER = "/home/jahn/Desktop/thesis/";
 	
 	public static void main(String[] args) {
-			FilePath paths = new FilePath(MAIN_FOLDER);
+			FragmentFilePath paths = new FragmentFilePath(MAIN_FOLDER);
 			for(String path:paths.getAllPaths()){
 				fragmentation(path);
 			}

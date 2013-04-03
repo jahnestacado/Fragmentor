@@ -1,4 +1,4 @@
-package nl.cwi.bfd.fingerprint.writer;
+package nl.cwi.bfd.fingerprint.io.writer;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -7,8 +7,8 @@ public class SaveFingerprint {
 	private final static String outputPath ="/home/jahn/Desktop/thesis/fingerprints";
 	
 	public static  void writeToFile(float[] avgScore, float[] corrStrengthScore){
-		saveScore(avgScore,"PDF_AVGfingerprint.fgp");
-		saveScore(corrStrengthScore,"PDF_CORR_STR_fingerprint.fgp");
+		saveScore(avgScore,"XLS_AVGfingerprint.fgp");
+		saveScore(corrStrengthScore,"XLS_CORR_STR_fingerprint.fgp");
 	}
 	
 	

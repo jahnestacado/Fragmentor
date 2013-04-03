@@ -24,7 +24,7 @@ public class CorrelationFactor {
 		}
 	}
 
-	private float[] getBellCurveofArray(float[] score) {
+	public static float[] getBellCurveofArray(float[] score) {
 		for (int i = 0; i <= score.length - 1; i++) {
 			float power = -(float) (Math.pow(score[i], 2) / (2 * Math.pow(σ, 2)));
 			score[i] = (float) Math.pow(Math.E, power);

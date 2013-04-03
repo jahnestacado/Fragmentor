@@ -4,11 +4,11 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FilePath {
+public class FragmentFilePath {
 	private final List<String> paths;
 	private final static String OUTPUT_FOLDER = "fragments";
 
-	public FilePath(String path) {
+	public FragmentFilePath(String path) {
 		paths = new ArrayList<String>();
 		setPaths(path);
 	}

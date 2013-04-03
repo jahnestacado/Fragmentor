@@ -6,14 +6,14 @@ import java.util.List;
 import java.util.Map;
 
 import nl.cwi.bfd.fingerprint.io.reader.FragmentReader;
-import nl.cwi.bfd.fingerprint.writer.SaveFingerprint;
-import nl.cwi.fragmentor.io.FilePath;
+import nl.cwi.bfd.fingerprint.io.writer.SaveFingerprint;
+import nl.cwi.fragmentor.io.FragmentFilePath;
 
 public class FingerprintCreator {
-	private final static String MAIN_FOLDER = "/home/jahn/Desktop/thesis/pdf/fragments/";
+	private final static String MAIN_FOLDER = "/home/jahn/Desktop/thesis/xls/fragments/";
 
 	public static void main(String[] args) throws IOException {
-		FilePath paths = new FilePath(MAIN_FOLDER);
+		FragmentFilePath paths = new FragmentFilePath(MAIN_FOLDER);
 		List<Map<String, Float>> normalizedScores = new ArrayList<Map<String, Float>>();
 		for (String path : paths.getAllPaths()) {
 			normalizedScores.add(getNormalizedScore(path));
@@ -26,7 +26,7 @@ public class FingerprintCreator {
 	
 	}
 	
-	private static Map<String, Float> getNormalizedScore(String path) throws IOException{
+	public static Map<String, Float> getNormalizedScore(String path) throws IOException{
 		Map<String, Integer> freqs = FragmentReader.getFragmentsFreqs(path);
 		Map<String, Float> normalizedFreqs = MOBNormalization.getNormalizedFreqs(freqs);
 		Map<String, Float> compoundNormalizedFreqs = CompoundNormalization.getNormalizedFreqs(normalizedFreqs);
