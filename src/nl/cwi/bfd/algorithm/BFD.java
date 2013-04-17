@@ -7,7 +7,8 @@ public class BFD {
 
 	public static float getAssuranceLevel(float[] avgScore,float[] corrStrengthScore, float[] fragmentScore) {
 		float[] difference = CorrelationFactor.subArrays(fragmentScore,avgScore);
-		float[] corrFactors = CorrelationFactor.getBellCurveofArray(difference);
+		float[] corrFactors = CorrelationFactor.getBellCurveOfArray(difference);
+	
 		return arrayAvg(corrFactors);
 
 	}

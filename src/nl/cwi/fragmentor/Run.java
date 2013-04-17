@@ -8,14 +8,15 @@ import nl.cwi.fragmentor.io.FragmentFilePath;
 import nl.cwi.fragmentor.io.ReadFile;
 import nl.cwi.fragmentor.io.WriteFile;
 
-public class Main {
+public class Run {
 	private final static String MAIN_FOLDER = "/home/jahn/Desktop/thesis/";
 	
 	public static void main(String[] args) {
-			FragmentFilePath paths = new FragmentFilePath(MAIN_FOLDER);
-			for(String path:paths.getAllPaths()){
-				fragmentation(path);
-			}
+		FragmentFilePath paths = new FragmentFilePath(MAIN_FOLDER);
+		for (String path : paths.getAllPaths()) {
+			fragmentation(path);
+		}
+		System.out.println("ok");
 	}
 	
 	private static void fragmentation(String path) {

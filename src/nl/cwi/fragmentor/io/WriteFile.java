@@ -17,9 +17,16 @@ public class WriteFile {
 	private int fragmentSize;
 	private String fileName;
 	private int index = 0;
-	private final static String doc = "doc";
-	private final static String excel = "xls";
-	private final static String pdf = "pdf";
+	private final static String DOC = "doc";
+	private final static String EXCEL = "xls";
+	private final static String PDF = "pdf";
+	private final static String ZIP = "zip";
+	private final static String OGG = "ogg";
+	private final static String MP4 = "mp4";
+	private final static String TEXT = "text";
+	private final static String PNG = "png";
+	private final static String JPG = "jpg";
+	private final static String PPT = "ppt";
 	private String currentFolder;
 	private final List<Float> ratios;
 	private String path;
@@ -138,14 +145,35 @@ public class WriteFile {
 	private void setFolder(String type) {
 	
 		switch (type) {
-			case excel:
-				currentFolder = excel;
+			case EXCEL:
+				currentFolder = EXCEL;
 				break;
-			case doc:
-				currentFolder = doc;
+			case DOC:
+				currentFolder = DOC;
 				break;
-			case pdf:
-				currentFolder = pdf;
+			case PDF:
+				currentFolder = PDF;
+				break;
+			case OGG:
+				currentFolder = OGG;
+				break;
+			case ZIP:
+				currentFolder = ZIP;
+				break;
+			case PPT:
+				currentFolder = PPT;
+				break;
+			case MP4:
+				currentFolder = MP4;
+				break;
+			case PNG:
+				currentFolder = PNG;
+				break;
+			case JPG:
+				currentFolder = JPG;
+				break;
+			case TEXT:
+				currentFolder = TEXT;
 				break;
 			default:
 				break;

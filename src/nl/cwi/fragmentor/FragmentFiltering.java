@@ -5,7 +5,7 @@ import java.util.List;
 
 public class FragmentFiltering {
 
-	private final static float PERCENTAGE_THRESHOLD = 60.00f;
+	private final static float PERCENTAGE_THRESHOLD = 0.00f;
 	private final static Integer NEWLINE = 10;
 	private final static Integer TAB = 9;
 	private final static Integer CARRIAGE_RETURN = 13;
@@ -58,7 +58,7 @@ public class FragmentFiltering {
 
 	public static boolean checkThreshold(List<Integer> fragment) {
 		float ratio = (fragment.size() * 100.0f / FRAGMENT_SIZE);
-		if (ratio >= FragmentFiltering.PERCENTAGE_THRESHOLD)
+		if (ratio > FragmentFiltering.PERCENTAGE_THRESHOLD)
 			return true;
 
 		return false;

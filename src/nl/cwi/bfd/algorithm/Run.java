@@ -13,7 +13,7 @@ import nl.cwi.fragmentor.io.FragmentFilePath;
 public class Run {
 
 	
-	private final static String PDF_FRAGMENT_FOLDER = "/home/jahn/Desktop/thesis/pdf/fragments/";
+	private final static String FRAGMENT_INPUT_FOLDER = "/home/jahn/Desktop/thesis/text/fragments/";
 	private final static String FINGERPRINTS_FOLDER ="/home/jahn/Desktop/thesis/fingerprints";
 
 	private final static String[]  PDF_FINGERPRINT_PATHS = {
@@ -31,6 +31,16 @@ public class Run {
 															FINGERPRINTS_FOLDER + "/XLS_CORR_STR_fingerprint.fgp" 
 															};
 	
+	private final static String[]  PPT_FINGERPRINT_PATHS = {
+															FINGERPRINTS_FOLDER + "/PPT_AVGfingerprint.fgp",
+															FINGERPRINTS_FOLDER + "/PPT_CORR_STR_fingerprint.fgp" 
+															};
+	
+	private final static String[]  TEXT_FINGERPRINT_PATHS = {
+															FINGERPRINTS_FOLDER + "/TEXT_AVGfingerprint.fgp",
+															FINGERPRINTS_FOLDER + "/TEXT_CORR_STR_fingerprint.fgp" 
+															};
+	
 	private final static String[] results = {"PDF: ", "DOC: ", "XLS: "};
 	
 	private final static List<String[]> fingerprints = new ArrayList<String[]>();
@@ -39,36 +49,41 @@ public class Run {
 		fingerprints.add(PDF_FINGERPRINT_PATHS);
 		fingerprints.add(DOC_FINGERPRINT_PATHS);
 		fingerprints.add(XLS_FINGERPRINT_PATHS);
+		fingerprints.add(PPT_FINGERPRINT_PATHS);
+		fingerprints.add(TEXT_FINGERPRINT_PATHS);
 	}
 
 	
 	
 	public static void main(String[] args) throws IOException {
-	
 		
-		FragmentFilePath paths = new FragmentFilePath(PDF_FRAGMENT_FOLDER);
-	
+		
+		FragmentFilePath paths = new FragmentFilePath(FRAGMENT_INPUT_FOLDER);
+		
 		for (String path : paths.getAllPaths()) {
 			int index = 0;
-			for(String[] fingerprint : fingerprints){
+			float[] accuracies = new float[fingerprints.size()];
+			for (String[] fingerprint : fingerprints) {
+
 				float[] avgScore = FingerPrintReader.getScores(fingerprint[0]);
-				float[] corrStrengthScore = FingerPrintReader.getScores(fingerprint[1]);
-				System.out.print(results[index++]);
-			calculateAssuranceLevel(avgScore, corrStrengthScore, path);
-			
+				float[] corrStrengthScore = FingerPrintReader
+						.getScores(fingerprint[1]);
+
+				accuracies[index++] = calculateAssuranceLevel(avgScore,corrStrengthScore, path);
 			}
-			System.out.println("********");
+			AccuracyHolder holder = new AccuracyHolder(accuracies);
+			AdditionalChecker checker = new AdditionalChecker(holder);
+			System.out.println(checker.check());
 		}
-		
+		AdditionalChecker.getResults();
 		
 	}
 	
-	private static void calculateAssuranceLevel(float[] avgScore, float[] corrStrengthScore , String path ) throws IOException{
+	private static float calculateAssuranceLevel(float[] avgScore, float[] corrStrengthScore , String path ) throws IOException{
 		Map<String, Float> normalizedFragment = FingerprintCreator.getNormalizedScore(path);
 		float[] fragmentScore = AVGScore.valuesToArray(normalizedFragment);
-		
 		float assuranceLevel = BFD.getAssuranceLevel(avgScore, corrStrengthScore, fragmentScore);
-		System.out.print(assuranceLevel + " ");
+		return assuranceLevel;
 	}
 
 }

@@ -10,7 +10,7 @@ import nl.cwi.bfd.fingerprint.io.writer.SaveFingerprint;
 import nl.cwi.fragmentor.io.FragmentFilePath;
 
 public class FingerprintCreator {
-	private final static String MAIN_FOLDER = "/home/jahn/Desktop/thesis/xls/fragments/";
+	private final static String MAIN_FOLDER = "/home/jahn/Desktop/thesis/text/fragments/";
 
 	public static void main(String[] args) throws IOException {
 		FragmentFilePath paths = new FragmentFilePath(MAIN_FOLDER);
@@ -22,7 +22,7 @@ public class FingerprintCreator {
 		CorrelationFactor factors = new CorrelationFactor(normalizedScores, avgScore);
 		float[] corrStrengthScore = AVGScore.getCorrelationStrengthFingerprint(factors.getCorrFactors());
 	    SaveFingerprint.writeToFile(avgScore, corrStrengthScore);
-		
+		System.out.println("OK");
 	
 	}
 	

@@ -20,11 +20,11 @@ public class CorrelationFactor {
 		for(Map<String, Float> byteMap : normalizedScores){
 			float[] score = AVGScore.valuesToArray(byteMap);
 			float[] difference = subArrays(score, avgScore);
-			correlationFactors.add(getBellCurveofArray(difference));
+			correlationFactors.add(getBellCurveOfArray(difference));
 		}
 	}
 
-	public static float[] getBellCurveofArray(float[] score) {
+	public static float[] getBellCurveOfArray(float[] score) {
 		for (int i = 0; i <= score.length - 1; i++) {
 			float power = -(float) (Math.pow(score[i], 2) / (2 * Math.pow(σ, 2)));
 			score[i] = (float) Math.pow(Math.E, power);
