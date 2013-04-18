@@ -36,7 +36,7 @@ public class FragmentFactory {
 		return FRAGMENT_SIZE;
 	}
 	
-	private Integer[] convertToIntArray(byte[] fragment){
+	private static Integer[] convertToIntArray(byte[] fragment){
 		Integer[] fragmentToInt = new Integer[FRAGMENT_SIZE];
 		for(int i =0; i<=FRAGMENT_SIZE-1; i++){
 			int currentByte =(int) fragment[i];

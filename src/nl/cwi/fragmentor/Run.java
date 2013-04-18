@@ -1,12 +1,10 @@
 package nl.cwi.fragmentor;
 
 import java.io.IOException;
-import java.util.LinkedHashMap;
 import java.util.List;
 
 import nl.cwi.fragmentor.io.FragmentFilePath;
 import nl.cwi.fragmentor.io.ReadFile;
-import nl.cwi.fragmentor.io.WriteFile;
 
 public class Run {
 	private final static String MAIN_FOLDER = "/home/jahn/Desktop/thesis/";
@@ -14,12 +12,13 @@ public class Run {
 	public static void main(String[] args) {
 		FragmentFilePath paths = new FragmentFilePath(MAIN_FOLDER);
 		for (String path : paths.getAllPaths()) {
-			fragmentation(path);
+			System.out.println(path);
+			getFragments(path);
 		}
 		System.out.println("ok");
 	}
 	
-	private static void fragmentation(String path) {
+	private static void getFragments(String path) {
 		
 		try {
 			ReadFile reader = new ReadFile(path);
@@ -32,12 +31,14 @@ public class Run {
 			List<Integer[]> fragments = factory.getFileFragments();
 			List<Integer[]> filteredFragments = FragmentFiltering.getFilteredFragments(fragments);
 			List<Float> ratios = FragmentFiltering.calculateRatio(filteredFragments);
+			
+		 // List<LinkedHashMap<Integer, Integer>> stats = counter.getStats();
 
-		    ByteInstanceCounter counter = new ByteInstanceCounter(filteredFragments);
-		    List<LinkedHashMap<Integer, Integer>> stats = counter.getStats();
+		    ByteInstanceCounter counter = new ByteInstanceCounter(filteredFragments, info, ratios);
+		  
 		    
-			WriteFile write = new WriteFile(filteredFragments,ratios, info,stats);
-			write.produceOutput();
+		//	WriteFile write = new WriteFile(filteredFragments,ratios, info, stats);
+		//	write.produceOutput();
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
 		}

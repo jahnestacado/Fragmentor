@@ -11,12 +11,12 @@ import nl.cwi.fragmentor.FileInfo;
 
 public class WriteFile {
 	private final List<Integer[]> fragments;
-	private final List<LinkedHashMap<Integer, Integer>> fragmentStats;
+	private final LinkedHashMap<Integer, Integer> fragmentStats;
 	private final FileInfo info;
 	private String fileType;
 	private int fragmentSize;
 	private String fileName;
-	private int index = 0;
+	private final int index ;
 	private final static String DOC = "doc";
 	private final static String EXCEL = "xls";
 	private final static String PDF = "pdf";
@@ -28,15 +28,29 @@ public class WriteFile {
 	private final static String JPG = "jpg";
 	private final static String PPT = "ppt";
 	private String currentFolder;
-	private final List<Float> ratios;
+	private final float ratio;
 	private String path;
 	
 
 
+	//// Must be deleted and change the other constructor also
+	public WriteFile(List<Integer[]> fragments, float ratio, FileInfo info,LinkedHashMap<Integer, Integer> fragmentStats) {
+		this.fragments = null; ////
+		//
+		this.index = 0;
+		this.ratio = ratio;
+		this.fragmentStats = fragmentStats;
+		this.info = info;
+		setFileInfo();
+
+	}
+	////////////////***********************************************
 	
-	public WriteFile(List<Integer[]> fragments, List<Float> ratios, FileInfo info,List<LinkedHashMap<Integer, Integer>> fragmentStats) {
-		this.fragments = fragments;
-		this.ratios = ratios;
+	public WriteFile(int index, float ratio, FileInfo info,LinkedHashMap<Integer, Integer> fragmentStats) {
+		this.fragments = null; ////
+		//
+		this.index = index;
+		this.ratio = ratio;
 		this.fragmentStats = fragmentStats;
 		this.info = info;
 		setFileInfo();
@@ -52,14 +66,9 @@ public class WriteFile {
 	}
 
 	public void produceOutput() {
-		for (int i=0; i<= fragments.size()-1; i++) {
-			float percentage = ratios.get(i);
-			Integer[] fragment = fragments.get(i);
+			float percentage = ratio;
 			definePath(percentage);
-			//saveContent(fragment);
-			saveStats(fragmentStats.get(index));
-		}
-
+			saveStats(fragmentStats);
 	}
 	
 	private void definePath(float percentage){
@@ -72,6 +81,7 @@ public class WriteFile {
 		
 	}
 	
+	// This method currently is not being used. It writes the printable ASCII values of a fragment in a file
 	private void saveContent(Integer[] fragment) {
 		lineByLineWrite(path, fragment);
 	}
@@ -103,16 +113,13 @@ public class WriteFile {
 			FileWriter fstream = new FileWriter(path);
 			BufferedWriter out = new BufferedWriter(fstream);
 			out.write(fragmentStats(stats));
-			increaseFileCounter();
+			//increaseFileCounter();
 			out.close();
 		} catch (Exception e) {
 			System.out.println("Error: " + e.getMessage());
 		}
 	}
 	
-	private void increaseFileCounter(){
-		index++;
-	}
 	
 
 	private String fragmentStats(LinkedHashMap<Integer, Integer> stats) {

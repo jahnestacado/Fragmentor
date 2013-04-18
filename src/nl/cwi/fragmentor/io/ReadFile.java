@@ -1,30 +1,27 @@
 package nl.cwi.fragmentor.io;
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 
 public class ReadFile {
 
 	private final String location;
-	private final Path path;
-	private final static int SIZE = 614400;
-	
+//	private final Path path;
+	private final static int SIZE = 22020096; // 20MB
+
 	public ReadFile(String location) throws IOException{
 		this.location = location;
-		this.path = Paths.get(location);
+		//this.path = Paths.get(location);
 	}
-	
+
+	@SuppressWarnings("unused")
 	public byte[] fileToBytes() throws IOException{
 		FileInputStream f = new FileInputStream( location );
 		FileChannel ch = f.getChannel( );
-	
+
 		MappedByteBuffer mb = ch.map( FileChannel.MapMode.READ_ONLY,
 		    0L, ch.size( ) );
 		byte[] barray = new byte[SIZE];
@@ -40,14 +37,14 @@ public class ReadFile {
 		//return Files.readAllBytes(path);
 		return barray;
 	}
-	
+
 	public  String getType() {
 		int lastDotPosition = location.lastIndexOf(".");
 		String type = location.substring(lastDotPosition + 1, location.length());
 		return type;
 
 	}
-	
+
 	public  String getName() {
 		int lastSlashPosition = location.lastIndexOf("/");
 		int lastDotPosition = location.lastIndexOf(".");
@@ -55,6 +52,6 @@ public class ReadFile {
 		return name;
 
 	}
-	
+
 
 }

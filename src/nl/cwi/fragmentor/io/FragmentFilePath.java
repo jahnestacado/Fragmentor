@@ -7,6 +7,8 @@ import java.util.List;
 public class FragmentFilePath {
 	private final List<String> paths;
 	private final static String OUTPUT_FOLDER = "fragments";
+	private final static String FINGERPRINT_FOLDER = "fingerprints";
+
 
 	public FragmentFilePath(String path) {
 		paths = new ArrayList<String>();
@@ -17,8 +19,9 @@ public class FragmentFilePath {
 		File folder = new File(path);
 		String[] names = folder.list();
 		for (String name : names) {
-			if (name.equals(OUTPUT_FOLDER))
-				return;
+			if (name.equals(OUTPUT_FOLDER) || name.equals(FINGERPRINT_FOLDER)){
+				//skip that file
+			}
 			else if (!name.contains(".")) {
 				setPaths(path + name + "/");
 			} else
