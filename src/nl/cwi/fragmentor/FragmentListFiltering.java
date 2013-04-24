@@ -3,7 +3,7 @@ package nl.cwi.fragmentor;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FragmentFiltering {
+public class FragmentListFiltering {
 
 	private final static float PERCENTAGE_THRESHOLD = 0.00f;
 	private final static Integer NEWLINE = 10;
@@ -49,7 +49,7 @@ public class FragmentFiltering {
 		return ratios;
 	}
 
-	private static Integer[] toIntArray(List<Integer> list) {
+	public static Integer[] toIntArray(List<Integer> list) {
 		Integer[] ret = new Integer[list.size()];
 		for (int i = 0; i < ret.length; i++)
 			ret[i] = list.get(i);
@@ -58,7 +58,7 @@ public class FragmentFiltering {
 
 	public static boolean checkThreshold(List<Integer> fragment) {
 		float ratio = (fragment.size() * 100.0f / FRAGMENT_SIZE);
-		if (ratio > FragmentFiltering.PERCENTAGE_THRESHOLD)
+		if (ratio > FragmentListFiltering.PERCENTAGE_THRESHOLD)
 			return true;
 
 		return false;

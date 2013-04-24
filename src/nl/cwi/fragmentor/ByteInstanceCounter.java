@@ -4,18 +4,15 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-import nl.cwi.fragmentor.io.WriteFile;
-
 public class ByteInstanceCounter {
 	//** Integer key in map is the unsigned value of a byte
-	private final ArrayList<LinkedHashMap<Integer, Integer>> mapper = new ArrayList<LinkedHashMap<Integer, Integer>>();
-	private final List<Integer[]> fragments;
+	private LinkedHashMap<Integer, Integer> mapper;
+	private final Integer[] fragment;
 	private final static Integer NEWLINE = 10;
 	private final static Integer TAB = 9;
 	private final static Integer CARRIAGE_RETURN = 13;
 	private final static List<Integer> printableChars = new ArrayList<Integer>();
-	private final FileInfo info;
-	private final List<Float> ratios;
+
 
 	//** initialize array content comprised of all printables byte characters
 	//** +plus
@@ -29,10 +26,8 @@ public class ByteInstanceCounter {
 		printableChars.add(CARRIAGE_RETURN);
 	}
 
-	public ByteInstanceCounter(List<Integer[]> fragments, FileInfo info, List<Float> ratios) {
-		this.fragments = fragments;
-		this.info = info;
-		this.ratios = ratios;
+	public ByteInstanceCounter(Integer[] fragment) {
+		this.fragment = fragment;
 		setCounter();
 	}
 
@@ -45,21 +40,25 @@ public class ByteInstanceCounter {
 	}
 
 	private void setCounter() {
-		int index = 0;
-		for (Integer[] fragment : fragments) {
-			LinkedHashMap<Integer, Integer> instanceCounter = initCounter();
-			for (int z = 0; z <= fragment.length - 1; z++) {
-				int newValue = (instanceCounter.get(fragment[z]) + 1);
-				instanceCounter.put(fragment[z], newValue);
-			}
-			//mapper.add(instanceCounter);
-			new WriteFile(index, ratios.get(index),info,instanceCounter).produceOutput();
-			index++;
+		LinkedHashMap<Integer, Integer> instanceCounter = initCounter();
+		for (int z = 0; z <= fragment.length - 1; z++) {
+			int newValue = (instanceCounter.get(fragment[z]) + 1);
+			instanceCounter.put(fragment[z], newValue);
 		}
+		mapper = instanceCounter;
+	}
+	
+	// This is a workaround cause the code changed many times and in order to not affect the whole program I did this :p
+	private LinkedHashMap<String, Integer> keysToString(LinkedHashMap<Integer, Integer> map){
+		LinkedHashMap<String, Integer> score = new LinkedHashMap<String, Integer>();
+		for(Integer key : map.keySet()){
+			score.put(String.valueOf(key), map.get(key));
+		}
+		return score;
 	}
 
-	public List<LinkedHashMap<Integer, Integer>> getStats() {
-		return mapper;
+	public LinkedHashMap<String, Integer> getScore() {
+		return keysToString(mapper);
 	}
 
 }

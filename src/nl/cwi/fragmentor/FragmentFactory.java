@@ -41,7 +41,7 @@ public class FragmentFactory {
 		for(int i =0; i<=FRAGMENT_SIZE-1; i++){
 			int currentByte =(int) fragment[i];
 			if(currentByte<0){
-				currentByte = FragmentFiltering.getUnsignedByteValue(currentByte);
+				currentByte = FragmentListFiltering.getUnsignedByteValue(currentByte);
 			}
 			fragmentToInt[i] =currentByte;
 		}

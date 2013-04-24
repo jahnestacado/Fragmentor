@@ -60,24 +60,9 @@ public class AdditionalChecker {
 		System.out.println("SUM MAX: "+max(sum));
 	}
 	
-	private boolean checkDoc(){
-		if(doc >= 0.54) return true;
-		return false;
-		
-	}
 	
-	private boolean isNotDoc(float max){
-		float dif1 = Math.abs(pdf - doc);
-		float dif2 = Math.abs(doc - xls);
-		float total = dif1 + dif2;
-		
-		if(checkXls()) return false;
-		if(pdf == max ) return true;
-		if(dif1 >= 0.08) return false;
-		if((total <= 0.28 && max <=0.54)) return true;
-		
-		return false;
-	}
+	
+	
 	
 	private  static float max(float[] array) {
 	    float maximum = array[0];   
@@ -109,20 +94,8 @@ public class AdditionalChecker {
 	    }
 	    return minimum;
 	}
-	
-	private boolean checkXls(){
-		if(xls >= 0.445) return true;
-		return false;
-	}
-	
-	
-	private boolean isNotPDF(float max){
-		if(xls == max) return true;
-		
-		return false;
-	}
-	
 
+	
 	
 
 }

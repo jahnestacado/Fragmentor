@@ -10,7 +10,7 @@ import nl.cwi.bfd.fingerprint.io.writer.SaveFingerprint;
 import nl.cwi.fragmentor.io.FragmentFilePath;
 
 public class FingerprintCreator {
-	private final static String MAIN_FOLDER = "/home/jahn/Desktop/thesis/text/fragments/";
+	private final static String MAIN_FOLDER = "/home/jahn/Desktop/thesis/pdf/fragments/";
 
 	public static void main(String[] args) throws IOException {
 		FragmentFilePath paths = new FragmentFilePath(MAIN_FOLDER);

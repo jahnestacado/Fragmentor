@@ -13,7 +13,7 @@ import nl.cwi.fragmentor.io.FragmentFilePath;
 public class Run {
 
 	
-	private final static String FRAGMENT_INPUT_FOLDER = "/home/jahn/Desktop/thesis/text/fragments/";
+	private final static String FRAGMENT_INPUT_FOLDER = "/home/jahn/Desktop/thesis/pdf/fragments/";
 	private final static String FINGERPRINTS_FOLDER ="/home/jahn/Desktop/thesis/fingerprints";
 
 	private final static String[]  PDF_FINGERPRINT_PATHS = {
@@ -41,7 +41,7 @@ public class Run {
 															FINGERPRINTS_FOLDER + "/TEXT_CORR_STR_fingerprint.fgp" 
 															};
 	
-	private final static String[] results = {"PDF: ", "DOC: ", "XLS: "};
+	
 	
 	private final static List<String[]> fingerprints = new ArrayList<String[]>();
 	
@@ -74,8 +74,9 @@ public class Run {
 			AccuracyHolder holder = new AccuracyHolder(accuracies);
 			AdditionalChecker checker = new AdditionalChecker(holder);
 			System.out.println(checker.check());
+			
 		}
-		AdditionalChecker.getResults();
+		System.out.println("OK");
 		
 	}
 	

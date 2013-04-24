@@ -5,12 +5,11 @@ import java.io.FileWriter;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.LinkedHashMap;
-import java.util.List;
 
 import nl.cwi.fragmentor.FileInfo;
 
 public class WriteFile {
-	private final List<Integer[]> fragments;
+	private final Integer[] fragments;
 	private final LinkedHashMap<Integer, Integer> fragmentStats;
 	private final FileInfo info;
 	private String fileType;
@@ -33,22 +32,20 @@ public class WriteFile {
 	
 
 
-	//// Must be deleted and change the other constructor also
-	public WriteFile(List<Integer[]> fragments, float ratio, FileInfo info,LinkedHashMap<Integer, Integer> fragmentStats) {
-		this.fragments = null; ////
-		//
-		this.index = 0;
+	
+	public WriteFile(int index, Integer[] fragments, float ratio, FileInfo info) {
+		this.fragments = fragments; 
+		this.index = index;
 		this.ratio = ratio;
-		this.fragmentStats = fragmentStats;
+		this.fragmentStats = null;
 		this.info = info;
 		setFileInfo();
 
 	}
-	////////////////***********************************************
 	
+	// This constructor is for saving the Byte Instance Frequencies from a mpa to a file
 	public WriteFile(int index, float ratio, FileInfo info,LinkedHashMap<Integer, Integer> fragmentStats) {
-		this.fragments = null; ////
-		//
+		this.fragments = null; 
 		this.index = index;
 		this.ratio = ratio;
 		this.fragmentStats = fragmentStats;
@@ -65,10 +62,16 @@ public class WriteFile {
 		setFolder(fileType);
 	}
 
-	public void produceOutput() {
-			float percentage = ratio;
-			definePath(percentage);
-			saveStats(fragmentStats);
+	public void produceScoreOutput() {
+		float percentage = ratio;
+		definePath(percentage);
+		saveStats(fragmentStats);
+	}
+
+	public void produceContentOutput() {
+		float percentage = ratio;
+		definePath(percentage);
+		saveContent(fragments);
 	}
 	
 	private void definePath(float percentage){
@@ -81,11 +84,11 @@ public class WriteFile {
 		
 	}
 	
-	// This method currently is not being used. It writes the printable ASCII values of a fragment in a file
 	private void saveContent(Integer[] fragment) {
 		lineByLineWrite(path, fragment);
 	}
 
+	// This method currently is not being used. It writes the byte frequency score of a fragment in a file
 	private void saveStats(LinkedHashMap<Integer, Integer> stats) {
         path += ".score";
 	    writeStats(path,stats);
@@ -102,7 +105,7 @@ public class WriteFile {
 			out.write(fragmentToStringLineByLine(fragment));
 			out.close();
 		} catch (Exception e) {
-			System.out.println("Error: " + e.getMessage());
+			System.out.println("Error In lineByLine method");
 		}
 		
 	}
@@ -132,7 +135,6 @@ public class WriteFile {
 	
 	
 	
-	
 
     // returns a String which contains all bytes , line by line (one byte per line) maintining original sequence
 	private String fragmentToStringLineByLine(Integer[] fragment) {
@@ -143,8 +145,6 @@ public class WriteFile {
 		return content.replace("$$", ""+'\n');
 	}
 
-	
-	
 	
 	
 
