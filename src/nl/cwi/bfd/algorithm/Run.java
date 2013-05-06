@@ -14,43 +14,23 @@ public class Run {
 
 	
 	private final static String FRAGMENT_INPUT_FOLDER = "/home/jahn/Desktop/thesis/pdf/fragments/";
-	private final static String FINGERPRINTS_FOLDER ="/home/jahn/Desktop/thesis/fingerprints";
 
-	private final static String[]  PDF_FINGERPRINT_PATHS = {
-															FINGERPRINTS_FOLDER + "/PDF_AVGfingerprint.fgp",
-															FINGERPRINTS_FOLDER + "/PDF_CORR_STR_fingerprint.fgp" 
-															};
-	
-	private final static String[]  DOC_FINGERPRINT_PATHS = {
-															FINGERPRINTS_FOLDER + "/DOC_AVGfingerprint.fgp",
-															FINGERPRINTS_FOLDER + "/DOC_CORR_STR_fingerprint.fgp" 
-															};
-	
-	private final static String[]  XLS_FINGERPRINT_PATHS = {
-															FINGERPRINTS_FOLDER + "/XLS_AVGfingerprint.fgp",
-															FINGERPRINTS_FOLDER + "/XLS_CORR_STR_fingerprint.fgp" 
-															};
-	
-	private final static String[]  PPT_FINGERPRINT_PATHS = {
-															FINGERPRINTS_FOLDER + "/PPT_AVGfingerprint.fgp",
-															FINGERPRINTS_FOLDER + "/PPT_CORR_STR_fingerprint.fgp" 
-															};
-	
-	private final static String[]  TEXT_FINGERPRINT_PATHS = {
-															FINGERPRINTS_FOLDER + "/TEXT_AVGfingerprint.fgp",
-															FINGERPRINTS_FOLDER + "/TEXT_CORR_STR_fingerprint.fgp" 
-															};
-	
-	
 	
 	private final static List<String[]> fingerprints = new ArrayList<String[]>();
+	private static Results results;
 	
 	static{
-		fingerprints.add(PDF_FINGERPRINT_PATHS);
-		fingerprints.add(DOC_FINGERPRINT_PATHS);
-		fingerprints.add(XLS_FINGERPRINT_PATHS);
-		fingerprints.add(PPT_FINGERPRINT_PATHS);
-		fingerprints.add(TEXT_FINGERPRINT_PATHS);
+		fingerprints.add(FingerPrintPaths.getPdfFPPaths());
+		fingerprints.add(FingerPrintPaths.getDocFPPaths());
+		fingerprints.add(FingerPrintPaths.getXlsFPPaths());
+		fingerprints.add(FingerPrintPaths.getPptFPPaths());
+		fingerprints.add(FingerPrintPaths.getTextFPPaths());
+		fingerprints.add(FingerPrintPaths.getZipFPPaths());
+		fingerprints.add(FingerPrintPaths.getMp4FPPaths());
+		fingerprints.add(FingerPrintPaths.getJpgFPPaths());
+		fingerprints.add(FingerPrintPaths.getPngFPPaths());
+		fingerprints.add(FingerPrintPaths.getOggFPPaths());
+		
 	}
 
 	
@@ -72,10 +52,11 @@ public class Run {
 				accuracies[index++] = calculateAssuranceLevel(avgScore,corrStrengthScore, path);
 			}
 			AccuracyHolder holder = new AccuracyHolder(accuracies);
-			AdditionalChecker checker = new AdditionalChecker(holder);
-			System.out.println(checker.check());
+			results = new Results(holder);
+			results.set();
 			
 		}
+		Results.getResults();
 		System.out.println("OK");
 		
 	}

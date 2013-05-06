@@ -6,7 +6,7 @@ import java.util.List;
 
 public class ByteInstanceCounter {
 	//** Integer key in map is the unsigned value of a byte
-	private LinkedHashMap<Integer, Integer> mapper;
+	private LinkedHashMap<Integer, Integer> counter;
 	private final Integer[] fragment;
 	private final static Integer NEWLINE = 10;
 	private final static Integer TAB = 9;
@@ -45,7 +45,7 @@ public class ByteInstanceCounter {
 			int newValue = (instanceCounter.get(fragment[z]) + 1);
 			instanceCounter.put(fragment[z], newValue);
 		}
-		mapper = instanceCounter;
+		counter = instanceCounter;
 	}
 	
 	// This is a workaround cause the code changed many times and in order to not affect the whole program I did this :p
@@ -58,7 +58,7 @@ public class ByteInstanceCounter {
 	}
 
 	public LinkedHashMap<String, Integer> getScore() {
-		return keysToString(mapper);
+		return keysToString(counter);
 	}
 
 }

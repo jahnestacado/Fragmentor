@@ -9,7 +9,7 @@ import nl.cwi.bfd.algorithm.filtering.FragmentFiltering;
 import nl.cwi.fragmentor.ByteInstanceCounter;
 
 public class FragmentReader {
-	private final static int FRAGMENT_SIZE = 512;
+	public final static int FRAGMENT_SIZE = 512;
 	
 	/*public static Map<String,Integer> getFragmentsFreqs(String path) throws IOException{
 		Map<String,Integer> freqMapper = new LinkedHashMap<String,Integer>();

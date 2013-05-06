@@ -9,6 +9,8 @@ import nl.cwi.fragmentor.io.WriteFile;
 
 public class Run {
 	private final static String MAIN_FOLDER = "/home/jahn/Desktop/thesis/";
+	//private final static String MAIN_FOLDER = "/media/jahn/1234-5678/thesis/";
+
 	
 	public static void main(String[] args) {
 		FragmentFilePath paths = new FragmentFilePath(MAIN_FOLDER);

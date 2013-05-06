@@ -29,7 +29,7 @@ public class AVGScore {
 	}
 	
 	public static float[] mulArrayElementsWith(float[] array, int numOfFiles){
-		for(int i=0; i<array.length; i++) {
+		for(int i=0; i < array.length; i++) {
 			  array[i] = array[i] * numOfFiles;
 			}
 		return array;
@@ -37,7 +37,7 @@ public class AVGScore {
 	
 	
 	public static float[] divArrayElementsWith(float[] array, int numOfFiles){
-		for(int i=0; i<array.length; i++) {
+		for(int i=0; i < array.length; i++) {
 			  array[i] = array[i] / (numOfFiles + 1.0f);
 			}
 		return array;
