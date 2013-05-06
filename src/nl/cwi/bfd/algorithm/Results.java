@@ -53,7 +53,7 @@ public class Results {
 		updateCounter(max);
 	}
 	
-	public static void getResults(){
+	public  void getResults(){
 		int sum = 0;
 		for(String key : results.keySet()){
 			sum += results.get(key);
@@ -153,6 +153,13 @@ public class Results {
 			System.out.println(TEXT_TYPE);
 			return;
 		}
+		if (max == ppt){
+			int prevValue = results.get(PPT_TYPE);
+			results.put(PPT_TYPE, prevValue + 1);
+			System.out.println(PPT_TYPE);
+			return;
+		}
+
 		int prevValue = results.get(OTHER_TYPE);
 		System.out.println(OTHER_TYPE);
 		results.put(OTHER_TYPE, prevValue + 1);

@@ -56,7 +56,7 @@ public class Run {
 			results.set();
 			
 		}
-		Results.getResults();
+		results.getResults();
 		System.out.println("OK");
 		
 	}
