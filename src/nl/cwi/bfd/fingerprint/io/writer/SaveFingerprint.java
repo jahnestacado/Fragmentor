@@ -4,7 +4,7 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 
 public class SaveFingerprint {
-	private final static String outputPath ="/home/jahn/Desktop/thesis/fingerprints";
+	private final static String outputPath ="/home/jahn/Desktop/fp/fingerprints";
 	
 	public static  void writeToFile(float[] avgScore, float[] corrStrengthScore){
 		saveScore(avgScore,"TEXT_AVGfingerprint.fgp");
@@ -16,7 +16,8 @@ public class SaveFingerprint {
 		try {
 			FileWriter fstream = new FileWriter(outputPath + "/" + fileName);
 			BufferedWriter out = new BufferedWriter(fstream);
-			out.write(scoreToStringLineByLine(score));
+			String content = scoreToStringLineByLine(score);
+			out.write(content);
 			out.close();
 		} catch (Exception e) {
 			System.out.println("Error: " + e.getMessage());

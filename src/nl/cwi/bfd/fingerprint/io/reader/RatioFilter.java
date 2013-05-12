@@ -4,7 +4,7 @@ public class RatioFilter {
 
 	public static boolean checkRatio(float minRatio, float maxRatio, String path){
 		String[] array = path.split("_");
-		float fragmentsRatio = Float.valueOf(array.length -2); //is the substring of the path that contains the ratio information
+		float fragmentsRatio = Float.valueOf(array[array.length -2]); //is the substring of the path that contains the ratio information
 		if(fragmentsRatio > minRatio && fragmentsRatio <= maxRatio)
 			return true;
 	

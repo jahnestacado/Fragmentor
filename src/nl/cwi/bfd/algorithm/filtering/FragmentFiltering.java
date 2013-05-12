@@ -18,7 +18,7 @@ public class FragmentFiltering {
 	//** initialize array content comprised of all printables byte characters +
 	//** newline, tab and carriage_return
 	static {
-		for (int i = 36; i <= 126; i++) {
+		for (int i = 32; i <= 126; i++) {
 			printableChars.add(i);
 		}
 		printableChars.add(NEWLINE);

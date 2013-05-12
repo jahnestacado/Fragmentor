@@ -2,6 +2,7 @@ package nl.cwi.fragmentor.io;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.LinkedHashMap;
@@ -29,6 +30,8 @@ public class WriteFile {
 	private String currentFolder;
 	private final float ratio;
 	private String path;
+	
+	
 	
 
 
@@ -62,13 +65,13 @@ public class WriteFile {
 		setFolder(fileType);
 	}
 
-	public void produceScoreOutput() {
+	public void produceScoreOutput() throws IOException {
 		float percentage = ratio;
 		definePath(percentage);
 		saveStats(fragmentStats);
 	}
 
-	public void produceContentOutput() {
+	public void produceContentOutput() throws IOException {
 		float percentage = ratio;
 		definePath(percentage);
 		saveContent(fragments);
@@ -79,17 +82,19 @@ public class WriteFile {
 		String name = fileName + "_" + index + "_" + fragmentSize + "_"
 				+ formatter.format(percentage) + "_" + fileType + ".ext";
 
-		this.path = "/home/jahn/Desktop/thesis/" + currentFolder
+		this.path = "/home/jahn/Desktop/fp/" + currentFolder
 				+ "/fragments/" + name;
 		
+		//this.path = "/media/jahn/1234-5678/thesis/"+name;
+	
 	}
 	
-	private void saveContent(Integer[] fragment) {
+	private void saveContent(Integer[] fragment) throws IOException {
 		lineByLineWrite(path, fragment);
 	}
 
 	// This method currently is not being used. It writes the byte frequency score of a fragment in a file
-	private void saveStats(LinkedHashMap<Integer, Integer> stats) {
+	private void saveStats(LinkedHashMap<Integer, Integer> stats) throws IOException {
         path += ".score";
 	    writeStats(path,stats);
 	}
@@ -98,29 +103,25 @@ public class WriteFile {
 	
 	
 	// writes all bytes line-by-line
-	private void lineByLineWrite(String path,Integer[] fragment){
-		try {
-			FileWriter fstream = new FileWriter(path);
-			BufferedWriter out = new BufferedWriter(fstream);
-			out.write(fragmentToStringLineByLine(fragment));
-			out.close();
-		} catch (Exception e) {
-			System.out.println("Error In lineByLine method");
-		}
-		
+	private void lineByLineWrite(String path, Integer[] fragment)
+			throws IOException {
+		FileWriter fstream = new FileWriter(path);
+		BufferedWriter out = new BufferedWriter(fstream);
+		String content = fragmentToStringLineByLine(fragment);
+		out.write(content);
+		out.close();
+
 	}
 	
 	
-	private void writeStats(String path,LinkedHashMap<Integer, Integer> stats){
-		try {
+	private void writeStats(String path,LinkedHashMap<Integer, Integer> stats) throws IOException{
+		
 			FileWriter fstream = new FileWriter(path);
 			BufferedWriter out = new BufferedWriter(fstream);
 			out.write(fragmentStats(stats));
 			//increaseFileCounter();
 			out.close();
-		} catch (Exception e) {
-			System.out.println("Error: " + e.getMessage());
-		}
+		
 	}
 	
 	
@@ -138,9 +139,9 @@ public class WriteFile {
 
     // returns a String which contains all bytes , line by line (one byte per line) maintining original sequence
 	private String fragmentToStringLineByLine(Integer[] fragment) {
-		String content = new String();
-		for (int b : fragment) {
-			content += b +"$$" ;
+		String content = "";
+		for (Integer b : fragment) {
+			content += b.intValue() +"$$" ;
 		}
 		return content.replace("$$", ""+'\n');
 	}

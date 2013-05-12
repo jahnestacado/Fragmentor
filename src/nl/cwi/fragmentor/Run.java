@@ -8,9 +8,9 @@ import nl.cwi.fragmentor.io.ReadFile;
 import nl.cwi.fragmentor.io.WriteFile;
 
 public class Run {
-	private final static String MAIN_FOLDER = "/home/jahn/Desktop/thesis/";
+	private final static String MAIN_FOLDER = "/home/jahn/Desktop/fp/doc/";
 	//private final static String MAIN_FOLDER = "/media/jahn/1234-5678/thesis/";
-
+	//private final static String MAIN_FOLDER = "/home/jahn/corpus/ogg/";
 	
 	public static void main(String[] args) {
 		FragmentFilePath paths = new FragmentFilePath(MAIN_FOLDER);
@@ -35,12 +35,9 @@ public class Run {
 			List<Integer[]> filteredFragments = FragmentListFiltering.getFilteredFragments(fragments);
 			List<Float> ratios = FragmentListFiltering.calculateRatio(filteredFragments);
 			
-		 // List<LinkedHashMap<Integer, Integer>> stats = counter.getStats();
-
-		 //   ByteInstanceCounter counter = new ByteInstanceCounter(filteredFragments, info, ratios);
 		  
 		    for(int i=0;i<=ratios.size()-1;i++){
-			WriteFile write = new WriteFile(i,fragments.get(i),ratios.get(i), info);
+			WriteFile write = new WriteFile(i,filteredFragments.get(i),ratios.get(i), info);
 	        write.produceContentOutput();
 		    }
 	        

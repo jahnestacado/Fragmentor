@@ -15,7 +15,7 @@ public class FragmentListFiltering {
 	//** initialize array content comprised of all printables byte characters +
 	//** newline, tab and carriage_return
 	static {
-		for (int i = 36; i <= 126; i++) {
+		for (int i = 32; i <= 126; i++) {
 			printableChars.add(i);
 		}
 		printableChars.add(NEWLINE);
@@ -23,8 +23,7 @@ public class FragmentListFiltering {
 		printableChars.add(CARRIAGE_RETURN);
 	}
 
-	public static List<Integer[]> getFilteredFragments(
-			List<Integer[]> rawFragments) {
+	public static List<Integer[]> getFilteredFragments( List<Integer[]> rawFragments) {
 		List<Integer[]> filteredFragments = new ArrayList<Integer[]>();
 		for (Integer[] fragment : rawFragments) {
 			List<Integer> filteredFragment = new ArrayList<Integer>();

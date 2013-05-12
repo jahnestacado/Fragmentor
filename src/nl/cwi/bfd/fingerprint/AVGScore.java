@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 public class AVGScore {
-	private final static int arraySize = 94;
+	private final static int arraySize = 98; // size of printable ASCII charachters set
 	
 	
 	public static float[] getFreqFingerprint(List<Map<String, Float>> compoundNormalizedFreqs){
@@ -52,7 +52,7 @@ public class AVGScore {
 	}
 	
 	public static float[] valuesToArray(Map<String, Float> compoundNormalizedFreqs){
-		float[] array = new float[94];
+		float[] array = new float[arraySize];
 		int index = 0;
 		for(String key : compoundNormalizedFreqs.keySet()){
 			array[index++]=compoundNormalizedFreqs.get(key);
