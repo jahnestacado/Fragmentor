@@ -1,41 +1,24 @@
 package nl.cwi.fragmentor.io;
 
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.nio.MappedByteBuffer;
-import java.nio.channels.FileChannel;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 
 public class ReadFile {
 
 	private final String location;
-//	private final Path path;
-	private final static int SIZE = 22020096; // 20MB
+	private final Path path;
 
 	public ReadFile(String location) throws IOException{
 		this.location = location;
-		//this.path = Paths.get(location);
+		this.path = Paths.get(location);
+		fileToBytes();
 	}
 
-	@SuppressWarnings("unused")
 	public byte[] fileToBytes() throws IOException{
-		FileInputStream f = new FileInputStream( location );
-		FileChannel ch = f.getChannel( );
-
-		MappedByteBuffer mb = ch.map( FileChannel.MapMode.READ_ONLY,
-		    0L, ch.size( ) );
-		byte[] barray = new byte[SIZE];
-		long checkSum = 0L;
-		int nGet;
-		while( mb.hasRemaining( ) )
-		{
-		    nGet = Math.min( mb.remaining( ), SIZE );
-		    mb.get( barray, 0, nGet );
-		    for ( int i=0; i<nGet; i++ )
-		        checkSum += barray[i];
-		}
-		//return Files.readAllBytes(path);
-		return barray;
+		return Files.readAllBytes(path);
 	}
 
 	public  String getType() {

@@ -7,7 +7,7 @@ import java.io.IOException;
 public class FingerPrintReader {
 	
 	public static float[] getScores(String path) throws IOException{
-		float[] content = new float[94];
+		float[] content = new float[98];
 		BufferedReader reader = new BufferedReader(new FileReader(path));
 		String line;
 		int i = 0;
