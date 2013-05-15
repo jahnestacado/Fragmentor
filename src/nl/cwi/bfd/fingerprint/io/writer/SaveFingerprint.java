@@ -7,8 +7,8 @@ public class SaveFingerprint {
 	private final static String outputPath ="/home/jahn/Desktop/fp/fingerprints";
 	
 	public static  void writeToFile(float[] avgScore, float[] corrStrengthScore){
-		saveScore(avgScore,"TEXT_AVGfingerprint.fgp");
-		saveScore(corrStrengthScore,"TEXT_CORR_STR_fingerprint.fgp");
+		saveScore(avgScore,"XLS_AVGfingerprint.fgp");
+		saveScore(corrStrengthScore,"XLS_CORR_STR_fingerprint.fgp");
 	}
 	
 	

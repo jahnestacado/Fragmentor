@@ -8,7 +8,7 @@ import nl.cwi.fragmentor.io.ReadFile;
 import nl.cwi.fragmentor.io.WriteFile;
 
 public class Run {
-	private final static String MAIN_FOLDER = "/media/jahn/1234-5678/fp/";
+	private final static String MAIN_FOLDER = "/home/jahn/Desktop/keno/";
 	//private final static String MAIN_FOLDER = "/media/jahn/1234-5678/thesis/";
 	//private final static String MAIN_FOLDER = "/home/jahn/corpus/ogg/";
 	

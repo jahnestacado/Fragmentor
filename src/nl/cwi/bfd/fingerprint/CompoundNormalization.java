@@ -15,7 +15,6 @@ public class CompoundNormalization {
 			float compoundNormalizedValue =  (float) Math.pow(value, ( 1 / β));
 			normalizedFreqs.put(byteId, compoundNormalizedValue);
 		}
-
 		return normalizedFreqs;
 
 	}
