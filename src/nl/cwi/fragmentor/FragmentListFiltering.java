@@ -1,6 +1,7 @@
 package nl.cwi.fragmentor;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class FragmentListFiltering {
@@ -11,6 +12,7 @@ public class FragmentListFiltering {
 	private final static Integer CARRIAGE_RETURN = 13;
 	private final static List<Integer> printableChars = new ArrayList<Integer>();
 	private final static int FRAGMENT_SIZE = 512;
+	private static List<Float> ratioList = new LinkedList<Float>();
 
 	//** initialize array content comprised of all printables byte characters +
 	//** newline, tab and carriage_return
@@ -24,8 +26,12 @@ public class FragmentListFiltering {
 	}
 
 	public static List<Integer[]> getFilteredFragments( List<Integer[]> rawFragments) {
+		ratioList.clear();
 		List<Integer[]> filteredFragments = new ArrayList<Integer[]>();
 		for (Integer[] fragment : rawFragments) {
+			
+		        	//System.out.println(fragment.length);
+		        
 			List<Integer> filteredFragment = new ArrayList<Integer>();
 			for (int i = 0; i <= FRAGMENT_SIZE - 1; i++) {
 				if (printableChars.contains(fragment[i])) {
@@ -33,7 +39,12 @@ public class FragmentListFiltering {
 				}
 			}
 			if (checkThreshold(filteredFragment)) {
-				filteredFragments.add(toIntArray(filteredFragment));
+				//System.out.println("A: "+filteredFragment.size());
+				//System.out.println("B: "+toIntArray(filteredFragment).length);
+              ratioList.add(calculateRatio(toIntArray(filteredFragment)));
+				filteredFragments.add(fragment);   ///WTF WTF WTF *****
+				//****
+				///*****
 			}
 		}
 		return filteredFragments;
@@ -46,6 +57,11 @@ public class FragmentListFiltering {
 			ratios.add(ratio);
 		}
 		return ratios;
+	}
+	
+	public static float calculateRatio(Integer[] filteredFragment) {
+		float ratio = (filteredFragment.length * 100.0f / FRAGMENT_SIZE);
+		return ratio;
 	}
 
 	public static Integer[] toIntArray(List<Integer> list) {
@@ -68,6 +84,10 @@ public class FragmentListFiltering {
 			value = value + 256;
 		}
 		return value;
+	}
+	
+	public static List<Float> getRatioList(){
+		return ratioList;
 	}
 
 }

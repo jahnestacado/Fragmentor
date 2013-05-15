@@ -46,7 +46,7 @@ public class WriteFile {
 
 	}
 	
-	// This constructor is for saving the Byte Instance Frequencies from a mpa to a file
+	// This constructor is for saving the Byte Instance Frequencies from a map to a file
 	public WriteFile(int index, float ratio, FileInfo info,LinkedHashMap<Integer, Integer> fragmentStats) {
 		this.fragments = null; 
 		this.index = index;

@@ -15,6 +15,7 @@ public class FingerprintCreator {
 	static float[] corrStrengthScore;
 	private static float[] avgScore;
 	private static boolean isFirstTime = true;
+	private static int index = 0;
 
 	public static void main(String[] args) throws IOException {
 		FragmentFilePath paths = new FragmentFilePath(MAIN_FOLDER);
@@ -77,10 +78,11 @@ public class FingerprintCreator {
 			throws IOException {
 		List<Map<String, Float>> normalizedScores = new ArrayList<Map<String, Float>>();
 		for (String path : paths) {
-			if (counter == 25) {
+			if (counter == 50000) {
 				counter = 0;
 				createAVG(normalizedScores);
 				normalizedScores.clear();
+				System.out.println(++index);
 			}
 			normalizedScores.add(getNormalizedScore(path));
 			counter++;

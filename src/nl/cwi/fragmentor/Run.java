@@ -32,9 +32,16 @@ public class Run {
 			info.setSize(factory.getFragmentSize());
 		
 			List<Integer[]> fragments = factory.getFileFragments();
+	       
 			List<Integer[]> filteredFragments = FragmentListFiltering.getFilteredFragments(fragments);
-			List<Float> ratios = FragmentListFiltering.calculateRatio(filteredFragments);
-			
+		        	System.out.println("fl check");
+		        	System.out.print(filteredFragments.size());
+
+
+			//List<Float> ratios = FragmentListFiltering.calculateRatio(filteredFragments);
+				List<Float> ratios = FragmentListFiltering.getRatioList();
+	        	System.out.println("ratios :"+ ratios.size());
+
 		  
 		    for(int i=0;i<=ratios.size()-1;i++){
 			WriteFile write = new WriteFile(i,filteredFragments.get(i),ratios.get(i), info);
