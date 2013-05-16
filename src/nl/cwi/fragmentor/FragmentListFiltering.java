@@ -29,9 +29,7 @@ public class FragmentListFiltering {
 		ratioList.clear();
 		List<Integer[]> filteredFragments = new ArrayList<Integer[]>();
 		for (Integer[] fragment : rawFragments) {
-			
-		        	//System.out.println(fragment.length);
-		        
+					        
 			List<Integer> filteredFragment = new ArrayList<Integer>();
 			for (int i = 0; i <= FRAGMENT_SIZE - 1; i++) {
 				if (printableChars.contains(fragment[i])) {

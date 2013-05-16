@@ -35,7 +35,6 @@ public class FragmentReader {
 		}
 		reader.close();
 		Integer[] filteredFragment = FragmentFiltering.getFilteredFragment(rawFragment);
-		System.out.println(filteredFragment.length);
 		Map<String,Integer> freqMapper = new ByteInstanceCounter(filteredFragment).getScore();
 		return freqMapper;
 	}

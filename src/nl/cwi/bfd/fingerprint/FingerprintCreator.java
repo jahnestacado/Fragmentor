@@ -16,12 +16,14 @@ public class FingerprintCreator {
 	private static float[] avgScore;
 	private static boolean isFirstTime = true;
 	private static int index = 0;
+	private final static int CACHE_SIZE = 50000;
 
 	public static void main(String[] args) throws IOException {
 		FragmentFilePath paths = new FragmentFilePath(MAIN_FOLDER);
-		createAVGFingerprint(paths.getAllPaths());
+		List<String> allPaths = paths.getAllPaths();
+		createAVGFingerprint(allPaths);
 		isFirstTime = true;
-		createCorrStrFingerprint(paths.getAllPaths());
+		createCorrStrFingerprint(allPaths);
 		SaveFingerprint.writeToFile(avgScore, corrStrengthScore);
 		System.out.println("OK");
 	}
@@ -30,7 +32,7 @@ public class FingerprintCreator {
 			throws IOException {
 		List<Map<String, Float>> normalizedScores = new ArrayList<Map<String, Float>>();
 		for (String path : paths) {
-			if (counter == 50000) {
+			if (counter == CACHE_SIZE) {
 				counter = 0;
 				createCorrStr(normalizedScores);
 				normalizedScores.clear();
@@ -78,11 +80,10 @@ public class FingerprintCreator {
 			throws IOException {
 		List<Map<String, Float>> normalizedScores = new ArrayList<Map<String, Float>>();
 		for (String path : paths) {
-			if (counter == 50000) {
+			if (counter == CACHE_SIZE) {
 				counter = 0;
 				createAVG(normalizedScores);
 				normalizedScores.clear();
-				System.out.println(++index);
 			}
 			normalizedScores.add(getNormalizedScore(path));
 			counter++;

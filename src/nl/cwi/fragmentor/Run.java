@@ -8,7 +8,7 @@ import nl.cwi.fragmentor.io.ReadFile;
 import nl.cwi.fragmentor.io.WriteFile;
 
 public class Run {
-	private final static String MAIN_FOLDER = "/home/jahn/Desktop/keno/";
+	private final static String MAIN_FOLDER = "/home/jahn/corpus/ogg/";
 	//private final static String MAIN_FOLDER = "/media/jahn/1234-5678/thesis/";
 	//private final static String MAIN_FOLDER = "/home/jahn/corpus/ogg/";
 	
@@ -34,13 +34,10 @@ public class Run {
 			List<Integer[]> fragments = factory.getFileFragments();
 	       
 			List<Integer[]> filteredFragments = FragmentListFiltering.getFilteredFragments(fragments);
-		        	System.out.println("fl check");
-		        	System.out.print(filteredFragments.size());
-
+		       
 
 			//List<Float> ratios = FragmentListFiltering.calculateRatio(filteredFragments);
 				List<Float> ratios = FragmentListFiltering.getRatioList();
-	        	System.out.println("ratios :"+ ratios.size());
 
 		  
 		    for(int i=0;i<=ratios.size()-1;i++){
