@@ -2,15 +2,17 @@ package nl.cwi.bfd.fingerprint;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
 import nl.cwi.bfd.fingerprint.io.reader.FragmentReader;
+import nl.cwi.bfd.fingerprint.io.reader.RatioFilter;
 import nl.cwi.bfd.fingerprint.io.writer.SaveFingerprint;
 import nl.cwi.fragmentor.io.FragmentFilePath;
 
 public class FingerprintCreator {
-	private final static String MAIN_FOLDER = "/home/jahn/Desktop/fp/xls/fragments/";
+	private final static String MAIN_FOLDER = "/home/jahn/Desktop/fp/text/fragments/";
 	private static int counter = 0;
 	static float[] corrStrengthScore;
 	private static float[] avgScore;
@@ -21,6 +23,7 @@ public class FingerprintCreator {
 	public static void main(String[] args) throws IOException {
 		FragmentFilePath paths = new FragmentFilePath(MAIN_FOLDER);
 		List<String> allPaths = paths.getAllPaths();
+		//allPaths = getSubsetWithRatio(allPaths, 0, 25);
 		createAVGFingerprint(allPaths);
 		isFirstTime = true;
 		createCorrStrFingerprint(allPaths);
@@ -41,6 +44,7 @@ public class FingerprintCreator {
 			counter++;
 		}
 		createCorrStr(normalizedScores);
+		System.out.println("End of Phaze#2");
 	}
 
 	private static void createCorrStr(List<Map<String, Float>> normalizedScores) {
@@ -80,6 +84,7 @@ public class FingerprintCreator {
 			throws IOException {
 		List<Map<String, Float>> normalizedScores = new ArrayList<Map<String, Float>>();
 		for (String path : paths) {
+		
 			if (counter == CACHE_SIZE) {
 				counter = 0;
 				createAVG(normalizedScores);
@@ -87,10 +92,23 @@ public class FingerprintCreator {
 			}
 			normalizedScores.add(getNormalizedScore(path));
 			counter++;
+			
 		}
 		createAVG(normalizedScores);
 		normalizedScores = null;
 		counter = 0;
+		System.out.println("End of Phaze#1");
 	}
-
+	
+	private static  List<String> getSubsetWithRatio(List<String> paths, int minRatio,int maxRatio) {
+		List<String> filteredRatios = new LinkedList<String>();
+		for (String path : paths) {
+			if (RatioFilter.checkRatio(minRatio, maxRatio, path)) {
+				System.out.println(++index);
+				filteredRatios.add(path);
+			}
+		}
+		return filteredRatios;
+	}
+	
 }
