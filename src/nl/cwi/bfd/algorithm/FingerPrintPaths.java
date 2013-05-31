@@ -1,7 +1,7 @@
 package nl.cwi.bfd.algorithm;
 
 public class FingerPrintPaths {
-	private final static String FINGERPRINTS_FOLDER ="/home/jahn/Desktop/thesis/fingerprints";
+	private final static String FINGERPRINTS_FOLDER ="/home/jahn/Desktop/fp/fingerprints";
 	
 	private final static String[]  PDF_FINGERPRINT_PATHS = {
 		FINGERPRINTS_FOLDER + "/PDF_AVGfingerprint.fgp",

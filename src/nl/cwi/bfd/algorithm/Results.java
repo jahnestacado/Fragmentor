@@ -29,9 +29,11 @@ public class Results {
 	private final static String PPT_TYPE= "ppt";
 	private final static String OTHER_TYPE= "*";
 	private final static Map<String,Integer> results = new HashMap<String, Integer>();
+	private final String path;
 
 	
-	public Results(AccuracyHolder holder){
+	public Results(AccuracyHolder holder, String path){
+		this.path = path;
 		pdf = holder.getPDFAccuracy();
 		doc = holder.getDOCAccuracy();
 		xls = holder.getXLSAccuracy();
@@ -44,7 +46,7 @@ public class Results {
 		ogg = holder.getOGGAccuracy();
 		if (results.size() == 0) {
 			initMap();
-		}
+		}	
 	}
 
 	public void set() {
@@ -151,6 +153,7 @@ public class Results {
 			int prevValue = results.get(TEXT_TYPE);
 			results.put(TEXT_TYPE, prevValue + 1);
 			System.out.println(TEXT_TYPE);
+			//FileCopy.copyTo(path);
 			return;
 		}
 		if (max == ppt){

@@ -12,13 +12,13 @@ import nl.cwi.bfd.fingerprint.io.writer.SaveFingerprint;
 import nl.cwi.fragmentor.io.FragmentFilePath;
 
 public class FingerprintCreator {
-	private final static String MAIN_FOLDER = "/home/jahn/Desktop/fp/text/fragments/";
+	private final static String MAIN_FOLDER = "/home/jahn/Desktop/fp/xls/fragments/";
 	private static int counter = 0;
 	static float[] corrStrengthScore;
 	private static float[] avgScore;
 	private static boolean isFirstTime = true;
 	private static int index = 0;
-	private final static int CACHE_SIZE = 50000;
+	private final static int CACHE_SIZE = 25000;
 
 	public static void main(String[] args) throws IOException {
 		FragmentFilePath paths = new FragmentFilePath(MAIN_FOLDER);

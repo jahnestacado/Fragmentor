@@ -8,12 +8,13 @@ import java.util.Map;
 import nl.cwi.bfd.algorithm.reader.FingerPrintReader;
 import nl.cwi.bfd.fingerprint.AVGScore;
 import nl.cwi.bfd.fingerprint.FingerprintCreator;
+import nl.cwi.bfd.fingerprint.io.reader.RatioFilter;
 import nl.cwi.fragmentor.io.FragmentFilePath;
 
 public class Run {
 
 	
-	private final static String FRAGMENT_INPUT_FOLDER = "/home/jahn/Desktop/thesis/pdf/fragments/";
+	private final static String FRAGMENT_INPUT_FOLDER = "/home/jahn/Desktop/fp/pdf/fragments/";
 
 	
 	private final static List<String[]> fingerprints = new ArrayList<String[]>();
@@ -36,11 +37,13 @@ public class Run {
 	
 	
 	public static void main(String[] args) throws IOException {
-		
+		int numOffragments = 0;
 		
 		FragmentFilePath paths = new FragmentFilePath(FRAGMENT_INPUT_FOLDER);
 		
 		for (String path : paths.getAllPaths()) {
+			if(RatioFilter.checkRatio(25, 50, path)){
+			numOffragments++;
 			int index = 0;
 			float[] accuracies = new float[fingerprints.size()];
 			for (String[] fingerprint : fingerprints) {
@@ -52,12 +55,13 @@ public class Run {
 				accuracies[index++] = calculateAssuranceLevel(avgScore,corrStrengthScore, path);
 			}
 			AccuracyHolder holder = new AccuracyHolder(accuracies);
-			results = new Results(holder);
+			results = new Results(holder,path);
 			results.set();
+			}
 			
 		}
 		results.getResults();
-		System.out.println("OK");
+		System.out.println("OK "+numOffragments);
 		
 	}
 	
