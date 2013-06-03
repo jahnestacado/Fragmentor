@@ -104,67 +104,67 @@ public class Results {
 		if (max == pdf){
 			int prevValue = results.get(PDF_TYPE);
 			results.put(PDF_TYPE, prevValue + 1);
-			System.out.println(PDF_TYPE);
+			//System.out.println(PDF_TYPE);
 			return;
 		}
 		if (max == doc){
 			int prevValue = results.get(DOC_TYPE);
 			results.put(DOC_TYPE, prevValue + 1);
-			System.out.println(DOC_TYPE);
+			//System.out.println(DOC_TYPE);
 			return;
 		}
 		if (max == xls){
 			int prevValue = results.get(XLS_TYPE);
 			results.put(XLS_TYPE, prevValue + 1);
-			System.out.println(XLS_TYPE);
+			//System.out.println(XLS_TYPE);
 			return;
 		}
 		if (max == ogg){
 			int prevValue = results.get(OGG_TYPE);
 			results.put(OGG_TYPE, prevValue + 1);
-			System.out.println(OGG_TYPE);
+			//System.out.println(OGG_TYPE);
 			return;
 		}
 		if (max == mp4){
 			int prevValue = results.get(MP4_TYPE);
 			results.put(MP4_TYPE, prevValue + 1);
-			System.out.println(MP4_TYPE);
+			//System.out.println(MP4_TYPE);
 			return;
 		}
 		if (max == png){
 			int prevValue = results.get(PNG_TYPE);
 			results.put(PNG_TYPE, prevValue + 1);
-			System.out.println(PNG_TYPE);
+			//System.out.println(PNG_TYPE);
 			return;
 		}
 		if (max == jpg){
 			int prevValue = results.get(JPG_TYPE);
 			results.put(JPG_TYPE, prevValue + 1);
-			System.out.println(JPG_TYPE);
+			//System.out.println(JPG_TYPE);
 			return;
 		}
 		if (max == zip){
 			int prevValue = results.get(ZIP_TYPE);
 			results.put(ZIP_TYPE, prevValue + 1);
-			System.out.println(ZIP_TYPE);
+			//System.out.println(ZIP_TYPE);
 			return;
 		}
 		if (max == text){
 			int prevValue = results.get(TEXT_TYPE);
 			results.put(TEXT_TYPE, prevValue + 1);
-			System.out.println(TEXT_TYPE);
+			//System.out.println(TEXT_TYPE);
 			//FileCopy.copyTo(path);
 			return;
 		}
 		if (max == ppt){
 			int prevValue = results.get(PPT_TYPE);
 			results.put(PPT_TYPE, prevValue + 1);
-			System.out.println(PPT_TYPE);
+			//System.out.println(PPT_TYPE);
 			return;
 		}
 
 		int prevValue = results.get(OTHER_TYPE);
-		System.out.println(OTHER_TYPE);
+		//System.out.println(OTHER_TYPE);
 		results.put(OTHER_TYPE, prevValue + 1);
 		
 		
@@ -182,6 +182,10 @@ public class Results {
 		results.put(JPG_TYPE, 0);
 		results.put(ZIP_TYPE, 0);
 		results.put(OTHER_TYPE, 0);
+	}
+	
+	public void clearResults(){
+		results.clear();
 	}
 	
 	

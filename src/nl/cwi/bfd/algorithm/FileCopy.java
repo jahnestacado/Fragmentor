@@ -13,7 +13,8 @@ public class FileCopy {
         String source = fromPath;
         String [] temp = source.split("/");
         String fileName = temp[temp.length-1];
-        String target = "/home/jahn/Desktop/text_output/doc/"+fileName;
+        String fileType = temp[temp.length-3];
+        String target = "/home/jahn/Desktop/text_output/"+fileType+"/"+fileName;
         FileCopy.copyFile(source, target);
     }
 
