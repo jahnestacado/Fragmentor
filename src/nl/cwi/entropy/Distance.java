@@ -48,7 +48,7 @@ public class Distance {
 		return indices;
 	}
 	
-	public final static float getListMean(List<Integer> list){
+	public final static double getListMean(List<Double> list){
 		float sum = 0;
 		int size = list.size();
 		for(int i=0; i<= size -1;i++){
@@ -58,7 +58,7 @@ public class Distance {
 		return avg;
 	}
 	
-	public final static float getListMedian(List<Integer> list) {
+	public final static double getListMedian(List<Double> list) {
 		Collections.sort(list);
 		int size = list.size();
 		if( size == 0) return 0;
@@ -99,7 +99,7 @@ public class Distance {
 		  return result;
 		}
 
-	private static List<Integer>  arrayToList(Integer[] array){
+	public static List<Integer>  arrayToList(Integer[] array){
 		List<Integer> list = new ArrayList<Integer>();
 		for(int i = 0; i<= array.length-1;i++){
 			list.add(array[i]);

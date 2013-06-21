@@ -14,12 +14,18 @@ import nl.cwi.fragmentor.io.FragmentFilePath;
 
 public class Run {
 
-	private final static String[] typePaths = {"pdf","zip","doc","xls","ppt","mp4","ogg","text","png","jpg"};
+	private final static String[] typePaths = {"pdf","doc","xls","zip","ppt","mp4","ogg","text","png","jpg"};
 	private final static String FRAGMENT_INPUT_FOLDER = "/home/jahn/Desktop/fp/ppt/fragments/";
 	// NA vazw ta full fingerprints otan thelw na kanw copy-paste ta classified as TEXT fragments
 	
+/*	private final static String[] typePaths = {"pdf","doc","xls","pdf","doc","xls","pdf","doc","xls","pdf","doc","xls",
+		"pdf","doc","xls","pdf","doc","xls","pdf","doc","xls","pdf","doc","xls","pdf",
+		"doc","xls","pdf","doc","xls","pdf","doc","xls","pdf","doc","xls","pdf","doc","xls","pdf","doc","xls"};
+*/
 
-	
+	/*private final static String[] typePaths = {"doc","xls","pdf","doc","xls","pdf","xls","pdf","doc","pdf","doc","pdf","doc","pdf","doc"
+		,"pdf","doc","pdf","doc","pdf","doc","pdf","doc","pdf","doc","pdf","doc","pdf","doc","pdf","doc"};
+	*/
 	private final static List<String[]> fingerprints = new ArrayList<String[]>();
 	private static Results results;
 	
@@ -45,7 +51,7 @@ public class Run {
 		FragmentFilePath paths = new FragmentFilePath("/home/jahn/Desktop/text_output/"+type+"/");
 		System.out.println("******* "+type);
 		for (String path : paths.getAllPaths()) {
-		//	if(RatioFilter.checkRatio(0, 25, path)){
+			if(RatioFilter.checkRatio(0, 75, path)){
 			//numOffragments++;
 			int index = 0;
 			float[] accuracies = new float[fingerprints.size()];
@@ -58,10 +64,10 @@ public class Run {
 				accuracies[index++] = calculateAssuranceLevel(avgScore,corrStrengthScore, path);
 			}
 			AccuracyHolder holder = new AccuracyHolder(accuracies);
-			results = new Results(holder,path);
+			results = new Results(holder,path,type);
 			results.set();
 			
-			//}
+			}
 			
 		}
 	
@@ -75,15 +81,7 @@ public class Run {
 	
 	private static float calculateAssuranceLevel(float[] avgScore, float[] corrStrengthScore , String path ) throws IOException{
 		Map<String, Float> normalizedFragment = FingerprintCreator.getNormalizedScore(path);
-		Map<String, Float> special = new LinkedHashMap<String,Float>();
-		special.put("32", normalizedFragment.get("32"));
-		special.put("10", normalizedFragment.get("10"));
-		special.put("9", normalizedFragment.get("9"));
-		special.put("13", normalizedFragment.get("13"));
-
-		//float[] fragmentScore = AVGScore.valuesToArray(normalizedFragment);
-		float[] fragmentScore = AVGScore.valuesToArray(special);
-
+		float[] fragmentScore = AVGScore.valuesToArray(normalizedFragment);
 		float assuranceLevel = BFD.getAssuranceLevel(avgScore, corrStrengthScore, fragmentScore);
 		return assuranceLevel;
 	}

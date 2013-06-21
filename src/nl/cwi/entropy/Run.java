@@ -8,7 +8,7 @@ import nl.cwi.bfd.fingerprint.io.reader.FragmentReader;
 import nl.cwi.fragmentor.io.FragmentFilePath;
 
 public class Run {
-	private final static String INPUT_FOLDER ="/home/jahn/Desktop/text_output/ppt/";
+	private final static String INPUT_FOLDER ="/home/jahn/Desktop/text_output/xls/";
 
 	
 	public static void main(String[] args) throws IOException {

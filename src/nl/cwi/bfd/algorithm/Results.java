@@ -1,17 +1,24 @@
 package nl.cwi.bfd.algorithm;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import nl.cwi.bfd.fingerprint.io.reader.RatioFilter;
+import nl.cwi.counter.Counter;
+import nl.cwi.counter.IndividualZerosCounter;
+import nl.cwi.counter.StringsInFragments;
+import nl.cwi.entropy.CalculateEntropy;
+
 
 public class Results {
 	
-	private final float pdf;
-	private final float doc;
-	private final float xls;
+	private  float pdf;
+	private  float doc;
+	private  float xls;
 	private final float ppt;
-	private final float text;
+	private  float text;
 	private final float zip;
 	private final float jpg;
 	private final float mp4;
@@ -30,26 +37,39 @@ public class Results {
 	private final static String OTHER_TYPE= "*";
 	private final static Map<String,Integer> results = new HashMap<String, Integer>();
 	private final String path;
+	private final String type;
+	private static int nullValueMetricXls = 25;
+	private static float ENTROPY = 3.9f;
+	
+	private static double nullValueMetricDoc = 9;
 
 	
-	public Results(AccuracyHolder holder, String path){
+	public Results(AccuracyHolder holder, String path, String type) throws IOException{
 		this.path = path;
 		pdf = holder.getPDFAccuracy();
 		doc = holder.getDOCAccuracy();
 		xls = holder.getXLSAccuracy();
-		ppt = holder.getPPTAccuracy();
-		text = holder.getTEXTAccuracy();
-		zip = holder.getZIPAccuracy();
-		mp4 = holder.getMP4Accuracy();
-		jpg = holder.getJPGAccuracy();
-		png = holder.getPNGAccuracy();
-		ogg = holder.getOGGAccuracy();
+		//ppt = holder.getPPTAccuracy();
+		ppt =0;
+		//text = holder.getTEXTAccuracy();
+		text =0;
+		//zip = holder.getZIPAccuracy();
+		zip=0;
+		//mp4 = holder.getMP4Accuracy();
+		mp4=0;
+		//jpg = holder.getJPGAccuracy();
+		jpg =0;
+		//png = holder.getPNGAccuracy();
+		png = 0;
+		//ogg = holder.getOGGAccuracy();
+		ogg =0;
 		if (results.size() == 0) {
 			initMap();
 		}	
+		this.type = type;
 	}
 
-	public void set() {
+	public void set() throws IOException {
 		float[] array = { pdf, doc, xls, ppt, text, zip, mp4, jpg, png, ogg };
 		float max = max(array);
 		updateCounter(max);
@@ -100,41 +120,54 @@ public class Results {
 	    return minimum;
 	}
 	
-	private void updateCounter(float max) {
+	private void updateCounter(float max) throws IOException {
 		if (max == pdf){
 			int prevValue = results.get(PDF_TYPE);
 			results.put(PDF_TYPE, prevValue + 1);
-			//System.out.println(PDF_TYPE);
 			return;
 		}
 		if (max == doc){
 			int prevValue = results.get(DOC_TYPE);
 			results.put(DOC_TYPE, prevValue + 1);
-			//System.out.println(DOC_TYPE);
 			return;
 		}
 		if (max == xls){
+			double entropy = CalculateEntropy.getFragmentsEntropy(path);
+			if(firstCheck(entropy)){
+				
+                
+				if( IndividualZerosCounter.getNumOfIndieZeros(path).size() > 50 ){
+					int prevValue = results.get(XLS_TYPE);
+					results.put(XLS_TYPE, prevValue + 1);
+					//System.out.println(IndividualZerosCounter.getNumOfIndieZeros(path).size());
+				}
+				else if( pdf>doc && IndividualZerosCounter.getNumOfIndieZeros(path).size() <= nullValueMetricDoc  || entropy >= 5.8){
+					int prevValue = results.get(PDF_TYPE);
+					results.put(PDF_TYPE, prevValue + 1);
+				}
+				else {
+					int prevValue = results.get(DOC_TYPE);
+					results.put(DOC_TYPE, prevValue + 1);
+				}
+				return;
+			}
 			int prevValue = results.get(XLS_TYPE);
 			results.put(XLS_TYPE, prevValue + 1);
-			//System.out.println(XLS_TYPE);
 			return;
 		}
 		if (max == ogg){
 			int prevValue = results.get(OGG_TYPE);
 			results.put(OGG_TYPE, prevValue + 1);
-			//System.out.println(OGG_TYPE);
 			return;
 		}
 		if (max == mp4){
 			int prevValue = results.get(MP4_TYPE);
 			results.put(MP4_TYPE, prevValue + 1);
-			//System.out.println(MP4_TYPE);
 			return;
 		}
 		if (max == png){
 			int prevValue = results.get(PNG_TYPE);
 			results.put(PNG_TYPE, prevValue + 1);
-			//System.out.println(PNG_TYPE);
 			return;
 		}
 		if (max == jpg){
@@ -146,25 +179,42 @@ public class Results {
 		if (max == zip){
 			int prevValue = results.get(ZIP_TYPE);
 			results.put(ZIP_TYPE, prevValue + 1);
-			//System.out.println(ZIP_TYPE);
 			return;
 		}
 		if (max == text){
+			double entropy = CalculateEntropy.getFragmentsEntropy(path);
+			if(IndividualZerosCounter.getNumOfIndieZeros(path).size() > 0 || entropy > 5 ){
+				
+				if(firstCheck(entropy)){
+					if( pdf>doc && IndividualZerosCounter.getNumOfIndieZeros(path).size() <= nullValueMetricDoc || entropy >= 5.8){
+						int prevValue = results.get(PDF_TYPE);
+						results.put(PDF_TYPE, prevValue + 1);
+					}
+					else {
+						int prevValue = results.get(DOC_TYPE);
+						results.put(DOC_TYPE, prevValue + 1);
+					}
+					return;
+				}
+				int prevValue = results.get(XLS_TYPE);
+				results.put(XLS_TYPE, prevValue + 1);
+				return;
+			}
+			
 			int prevValue = results.get(TEXT_TYPE);
 			results.put(TEXT_TYPE, prevValue + 1);
-			//System.out.println(TEXT_TYPE);
 			//FileCopy.copyTo(path);
+		
+			 
 			return;
 		}
 		if (max == ppt){
 			int prevValue = results.get(PPT_TYPE);
 			results.put(PPT_TYPE, prevValue + 1);
-			//System.out.println(PPT_TYPE);
 			return;
 		}
 
 		int prevValue = results.get(OTHER_TYPE);
-		//System.out.println(OTHER_TYPE);
 		results.put(OTHER_TYPE, prevValue + 1);
 		
 		
@@ -186,8 +236,18 @@ public class Results {
 	
 	public void clearResults(){
 		results.clear();
+		if(type.equals("xls")){
+			nullValueMetricDoc = nullValueMetricDoc+ 0.5;
+			System.out.println("MEtric value: "+nullValueMetricDoc);
+			
+		}
 	}
 	
+	private boolean firstCheck(double entropy) throws IOException{
 	
+		if( entropy >= ENTROPY ||  IndividualZerosCounter.getNumOfIndieZeros(path).size() <= nullValueMetricXls) return true;
+		
+		return false;
+	}
 
 }

@@ -11,7 +11,7 @@ public class Main2 {
 	
 	public static void main(String[] args) {
 		sequencer("/home/jahn/Desktop/thesis/pdf/process2.pdf");
-			/**FilePath paths = new FilePath();
+			/*FilePath paths = new FilePath();
 			for(String path:paths.getAllPaths()){
 				System.out.println(path);
 			}

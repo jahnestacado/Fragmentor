@@ -10,5 +10,11 @@ public class RatioFilter {
 	
 		return false;
 	}
+	
+	public static double getFragmentsRatio(String path){
+		String[] array = path.split("_");
+		double fragmentsRatio = Float.valueOf(array[array.length -2]); //is the substring of the path that contains the ratio information
+		return fragmentsRatio;
+	}
 
 }
