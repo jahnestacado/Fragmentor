@@ -43,10 +43,10 @@ public class CalculateEntropy {
 	}
 	
 	
-	private static Double calculateShannonEntropy(List<Integer> values) {
+	private static Double calculateShannonEntropy(List<Integer> fragment) {
 		  Map<Integer, Integer> map = new HashMap<Integer, Integer>();
 		  // count the occurrences of each value
-		  for (Integer sequence : values) {
+		  for (Integer sequence : fragment) {
 		    if (!map.containsKey(sequence)) {
 		      map.put(sequence, 0);
 		    }
@@ -56,7 +56,7 @@ public class CalculateEntropy {
 		  // calculate the entropy
 		  Double result = 0.0;
 		  for (Integer sequence : map.keySet()) {
-		    Double frequency = (double) map.get(sequence) / values.size();
+		    Double frequency = (double) map.get(sequence) / fragment.size();
 		    result -= frequency * (Math.log(frequency) / Math.log(2));
 		  }
 		 

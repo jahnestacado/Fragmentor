@@ -25,9 +25,10 @@ public class Graphs {
 		HistogramDataset dataset = new HistogramDataset();
 		dataset.setType(HistogramType.FREQUENCY);
 		dataset.addSeries("Histogram", value, number);
-		String plotTitle = "Enter Distribution";
-		String xaxis = "Enter Frequency";
-		String yaxis = "Num. of Fragments";
+		
+		String plotTitle = type.toUpperCase()+" Individual Null Bytes Distribution";
+		String xaxis = "Individual Null Bytes";
+		String yaxis = "Frequency";
 		PlotOrientation orientation = PlotOrientation.VERTICAL;
 		boolean show = false;
 		boolean toolTips = false;
@@ -40,7 +41,7 @@ public class Graphs {
 		int height = 300;
 		try {
 			ChartUtilities.saveChartAsPNG(new File(
-					"/home/jahn/Desktop/histogramRat"+type+".png"), chart, width,
+					"/home/jahn/Desktop/Null"+type+".png"), chart, width,
 					height);
 		} catch (IOException e) {
 			System.out.println(e.getMessage());

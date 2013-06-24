@@ -15,7 +15,7 @@ import nl.cwi.fragmentor.io.FragmentFilePath;
 
 public class Run {
 
-	private final static String[] typePaths = {"pdf","doc","xls","zip","ppt","mp4","ogg","text","png","jpg"};
+	private final static String[] typePaths = {"text","pdf","doc","xls","zip","ppt","mp4","ogg","text","png","jpg"};
 	private final static String INPUT_FOLDER ="/home/jahn/Desktop/text_output/";
 	private  static List<Double> zerosFreqs ;
 	private static  double res ;
@@ -25,14 +25,11 @@ public class Run {
 			zerosFreqs= new LinkedList<Double>();
 		FragmentFilePath paths = new FragmentFilePath(INPUT_FOLDER+type+"/");
 		for (String path : paths.getAllPaths()) {
-			if(RatioFilter.checkRatio(0,100, path)){
+			//if(RatioFilter.checkRatio(0,100, path)){
 			//zerosFreqs.add(ROC.getRateOfChange(path));
 			//zerosFreqs.add(Counter.getCapitalRatioMetric(path));
-			//zerosFreqs.add((double) Counter.getNumofByteInFragment(32, path));
-				double rat = IndividualZerosCounter.getDistanceMeanOfNullIndieValues(path);
-				if(rat > 0){
-				zerosFreqs.add( rat);
-				}
+			zerosFreqs.add((double) Counter.getNumofByteInFragment(0, path));
+				
 			//zerosFreqs.add((double) StringsInFragments.getNumOfWordsInFragment(path));
 			/*double nullValues = IndividualZerosCounter.getNumOfIndieZeros(path).size();;
 			double ratio = RatioFilter.getFragmentsRatio(path);
@@ -43,7 +40,7 @@ public class Run {
 
 			//zerosFreqs.add( CalculateEntropy.getFragmentsEntropy(path));
 				//zerosFreqs.add((double)IndividualZerosCounter.getNumOfIndieZeros(path).size());
-			}
+		//	}
 		}
 		System.out.println(type);
 		/*

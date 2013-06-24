@@ -10,6 +10,7 @@ import nl.cwi.counter.Counter;
 import nl.cwi.counter.IndividualZerosCounter;
 import nl.cwi.counter.StringsInFragments;
 import nl.cwi.entropy.CalculateEntropy;
+import nl.cwi.lcs.XLS;
 
 
 public class Results {
@@ -40,6 +41,9 @@ public class Results {
 	private final String type;
 	private static int nullValueMetricXls = 25;
 	private static float ENTROPY = 3.9f;
+	private  static int numOfIndieZeros;
+	private  static double ratio;
+  private static double entropy;
 	
 	private static double nullValueMetricDoc = 9;
 
@@ -51,8 +55,8 @@ public class Results {
 		xls = holder.getXLSAccuracy();
 		//ppt = holder.getPPTAccuracy();
 		ppt =0;
-		//text = holder.getTEXTAccuracy();
-		text =0;
+		text = holder.getTEXTAccuracy();
+		//text =0;
 		//zip = holder.getZIPAccuracy();
 		zip=0;
 		//mp4 = holder.getMP4Accuracy();
@@ -67,6 +71,9 @@ public class Results {
 			initMap();
 		}	
 		this.type = type;
+		numOfIndieZeros = IndividualZerosCounter.getNumOfIndieZeros(path).size();
+		ratio = RatioFilter.getFragmentsRatio(path);
+		entropy = CalculateEntropy.getFragmentsEntropy(path);
 	}
 
 	public void set() throws IOException {
@@ -132,16 +139,14 @@ public class Results {
 			return;
 		}
 		if (max == xls){
-			double entropy = CalculateEntropy.getFragmentsEntropy(path);
+		
+			
 			if(firstCheck(entropy)){
-				
-                
-				if( IndividualZerosCounter.getNumOfIndieZeros(path).size() > 50 ){
+				if( numOfIndieZeros > 50  && ratio < 50  ){
 					int prevValue = results.get(XLS_TYPE);
 					results.put(XLS_TYPE, prevValue + 1);
-					//System.out.println(IndividualZerosCounter.getNumOfIndieZeros(path).size());
 				}
-				else if( pdf>doc && IndividualZerosCounter.getNumOfIndieZeros(path).size() <= nullValueMetricDoc  || entropy >= 5.8){
+				else if( pdf>doc && numOfIndieZeros <= nullValueMetricDoc  || entropy >= 5.8){
 					int prevValue = results.get(PDF_TYPE);
 					results.put(PDF_TYPE, prevValue + 1);
 				}
@@ -151,8 +156,14 @@ public class Results {
 				}
 				return;
 			}
+			
+			if(numOfIndieZeros > 50 && ratio < 50){
 			int prevValue = results.get(XLS_TYPE);
 			results.put(XLS_TYPE, prevValue + 1);
+			return;
+			}
+			int prevValue = results.get(DOC_TYPE);
+			results.put(DOC_TYPE, prevValue + 1);
 			return;
 		}
 		if (max == ogg){
@@ -183,10 +194,14 @@ public class Results {
 		}
 		if (max == text){
 			double entropy = CalculateEntropy.getFragmentsEntropy(path);
-			if(IndividualZerosCounter.getNumOfIndieZeros(path).size() > 0 || entropy > 5 ){
+			if(numOfIndieZeros > 0 || entropy > 5 ){
 				
 				if(firstCheck(entropy)){
-					if( pdf>doc && IndividualZerosCounter.getNumOfIndieZeros(path).size() <= nullValueMetricDoc || entropy >= 5.8){
+					if( numOfIndieZeros > 50  && ratio < 50  ){
+						int prevValue = results.get(XLS_TYPE);
+						results.put(XLS_TYPE, prevValue + 1);
+					}
+					else if( pdf>doc && numOfIndieZeros <= nullValueMetricDoc  || entropy >= 5.8){
 						int prevValue = results.get(PDF_TYPE);
 						results.put(PDF_TYPE, prevValue + 1);
 					}
@@ -196,8 +211,14 @@ public class Results {
 					}
 					return;
 				}
+				
+				if(numOfIndieZeros > 50 && ratio < 50){
 				int prevValue = results.get(XLS_TYPE);
 				results.put(XLS_TYPE, prevValue + 1);
+				return;
+				}
+				int prevValue = results.get(DOC_TYPE);
+				results.put(DOC_TYPE, prevValue + 1);
 				return;
 			}
 			
@@ -245,7 +266,7 @@ public class Results {
 	
 	private boolean firstCheck(double entropy) throws IOException{
 	
-		if( entropy >= ENTROPY ||  IndividualZerosCounter.getNumOfIndieZeros(path).size() <= nullValueMetricXls) return true;
+		if( entropy >= ENTROPY ||  numOfIndieZeros <= nullValueMetricXls) return true;
 		
 		return false;
 	}
