@@ -1,6 +1,7 @@
 package nl.cwi.bfd.fingerprint.io.reader;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Map;
@@ -23,6 +24,29 @@ public class FragmentReader {
 		return freqMapper;
 	}
 	*/
+	
+	
+	public static Integer[] getFragmentsStream(String path) throws NumberFormatException, IOException{
+		BufferedReader reader = new BufferedReader(new FileReader(path));
+		String line;
+		int index = 0;
+		Integer[] rawFragment = new Integer[FRAGMENT_SIZE];
+		while ((line = reader.readLine()) != null) {
+			rawFragment[index] = Integer.valueOf(line.trim());
+			index++;
+		}
+		reader.close();
+		return rawFragment;
+	}
+	
+	
+	public static Map<String,Integer> getFragmentsFreqs(Integer[] rawFragment) throws IOException{
+		
+		Integer[] filteredFragment = FragmentFiltering.getFilteredFragment(rawFragment);
+		Map<String,Integer> freqMapper = new ByteInstanceCounter(filteredFragment).getScore();
+		return freqMapper;
+	}
+	
 	
 	public static Map<String,Integer> getFragmentsFreqs(String path) throws IOException{
 		BufferedReader reader = new BufferedReader(new FileReader(path));

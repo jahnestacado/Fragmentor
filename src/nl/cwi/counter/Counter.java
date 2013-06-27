@@ -39,6 +39,14 @@ public class Counter {
 		return counter;
 	}
 	
+	public static int getNumofByteInFragment(int byteDecValue, Integer[] fragment) throws IOException{
+		int counter = 0;
+		for(int b : fragment){
+			if(b == byteDecValue) counter++;
+		}
+		return counter;
+	}
+	
 	public static int getNumofPrintableChars(String path) throws IOException{
 		Integer[] fragment = CalculateEntropy.getFragmentsContent(path);
 		int counter = 0;

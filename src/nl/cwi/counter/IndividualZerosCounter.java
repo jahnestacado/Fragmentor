@@ -43,6 +43,39 @@ public class IndividualZerosCounter {
 		return listWithWordLengths;
 	}
 	
+	public static int getNumOfIndieZeros(Integer[] fragment) throws IOException{
+		List<Integer> listWithWordLengths = new ArrayList<Integer>();
+		boolean flag = false;
+		int wordLength = 0;
+		for(int b : fragment){
+			if(flag == false){
+				if(b == 0){  
+					//if(printableChars.contains(b)){
+					wordLength++;
+					flag = true;
+				}
+			}
+			else{
+				if(b == 0){ 
+					//if(printableChars.contains(b)){
+					wordLength++;
+				}
+				else{
+					flag = false;
+					if(wordLength == 1){
+						listWithWordLengths.add(wordLength);
+					}
+					wordLength = 0;
+				}
+			}
+		
+		}
+		if(wordLength == 1){
+			listWithWordLengths.add(wordLength);
+		}
+		return listWithWordLengths.size();
+	}
+	
 	
 	
 	public static double getDistanceMeanOfNullIndieValues(String path) throws IOException{

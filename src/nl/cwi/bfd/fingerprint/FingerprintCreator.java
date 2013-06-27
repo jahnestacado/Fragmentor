@@ -70,6 +70,17 @@ public class FingerprintCreator {
 
 	}
 
+	public static Map<String, Float> getNormalizedScore(Integer[] fragment)
+			throws IOException {
+		Map<String, Integer> freqs = FragmentReader.getFragmentsFreqs(fragment);
+		Map<String, Float> normalizedFreqs = MOBNormalization
+				.getNormalizedFreqs(freqs);
+		Map<String, Float> compoundNormalizedFreqs = CompoundNormalization
+				.getNormalizedFreqs(normalizedFreqs);
+		return compoundNormalizedFreqs;
+	}
+	
+	
 	public static Map<String, Float> getNormalizedScore(String path)
 			throws IOException {
 		Map<String, Integer> freqs = FragmentReader.getFragmentsFreqs(path);
@@ -79,6 +90,9 @@ public class FingerprintCreator {
 				.getNormalizedFreqs(normalizedFreqs);
 		return compoundNormalizedFreqs;
 	}
+	
+	
+	
 
 	private static void createAVGFingerprint(List<String> paths)
 			throws IOException {

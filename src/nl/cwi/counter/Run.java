@@ -1,6 +1,9 @@
 package nl.cwi.counter;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -8,29 +11,31 @@ import java.util.List;
 import java.util.Map;
 
 import nl.cwi.bfd.algorithm.Graphs;
-import nl.cwi.bfd.fingerprint.io.reader.RatioFilter;
 import nl.cwi.entropy.CalculateEntropy;
 import nl.cwi.entropy.Distance;
 import nl.cwi.fragmentor.io.FragmentFilePath;
 
 public class Run {
 
-	private final static String[] typePaths = {"text","pdf","doc","xls","zip","ppt","mp4","ogg","text","png","jpg"};
+	private final static String[] typePaths = {"text","pdf","doc","xls","zip","ppt","mp4","ogg","png","jpg"};
 	private final static String INPUT_FOLDER ="/home/jahn/Desktop/text_output/";
 	private  static List<Double> zerosFreqs ;
 	private static  double res ;
+	private static  List<String> values;
 	
 	public static void main(String[] args) throws IOException {
 		for(String type : typePaths){
 			zerosFreqs= new LinkedList<Double>();
+			//values = new ArrayList<String>();
 		FragmentFilePath paths = new FragmentFilePath(INPUT_FOLDER+type+"/");
 		for (String path : paths.getAllPaths()) {
 			//if(RatioFilter.checkRatio(0,100, path)){
 			//zerosFreqs.add(ROC.getRateOfChange(path));
 			//zerosFreqs.add(Counter.getCapitalRatioMetric(path));
-			zerosFreqs.add((double) Counter.getNumofByteInFragment(0, path));
-				
-			//zerosFreqs.add((double) StringsInFragments.getNumOfWordsInFragment(path));
+			zerosFreqs.add((double) Counter.getNumofByteInFragment(48, path));
+			//values.add(String.valueOf(CalculateEntropy.getFragmentsEntropy(path)));
+		//	zerosFreqs.add(RatioFilter.getFragmentsRatio(path));
+			//zerosFreqs.add((double) StringsInFragment.getNumOfWordsInFragment(path));
 			/*double nullValues = IndividualZerosCounter.getNumOfIndieZeros(path).size();;
 			double ratio = RatioFilter.getFragmentsRatio(path);
 			if(nullValues == 0) nullValues = 0.1;
@@ -38,19 +43,12 @@ public class Run {
 			zerosFreqs.add( nullRatioAnalogy);
 			*/
 
-			//zerosFreqs.add( CalculateEntropy.getFragmentsEntropy(path));
+		//	zerosFreqs.add( CalculateEntropy.getFragmentsEntropy(path));
 				//zerosFreqs.add((double)IndividualZerosCounter.getNumOfIndieZeros(path).size());
 		//	}
 		}
 		System.out.println(type);
-		/*
-		int count = 0;
-		for(double d : zerosFreqs){
-			if(d < 20) count++;
-		}
-		System.out.println(count);
-		count = 0;
-		*/
+	
         Graphs.getHistogram(zerosFreqs,type);
 		System.out.println("Done");
 
@@ -64,6 +62,10 @@ public class Run {
 
 
 		System.out.println();
+		
+		//saveScore(values,type);
+		//System.out.println("Done");
+
 	}
 	}
 	
@@ -113,5 +115,21 @@ public class Run {
 	           return (a.get(middle-1) + a.get(middle)) / 2.0;
 	        }
 	    }
+	    
+		private static void saveScore(List<String> score, String filename){
+			try {
+				FileWriter fstream = new FileWriter("/home/jahn/Desktop/Entropy_"+filename+".txt");
+				BufferedWriter out = new BufferedWriter(fstream);
+				String content = new String();
+				for(String value : score){
+					content+=value+'\n';
+				}
+				out.write(content);
+				out.close();
+			} catch (Exception e) {
+				System.out.println("Error: " + e.getMessage());
+			}
+		}
+		
 
 }

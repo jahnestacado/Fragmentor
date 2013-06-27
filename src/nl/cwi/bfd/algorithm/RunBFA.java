@@ -12,22 +12,16 @@ import nl.cwi.bfd.fingerprint.FingerprintCreator;
 import nl.cwi.bfd.fingerprint.io.reader.RatioFilter;
 import nl.cwi.fragmentor.io.FragmentFilePath;
 
-public class Run {
+public class RunBFA {
 
-	private final static String[] typePaths = {"doc","xls","pdf","zip","ppt","mp4","ogg","text","png","jpg"};
+	//private final static String[] typePaths = {"doc","xls","pdf","zip","ppt","mp4","ogg","text","png","jpg"};
 	private final static String FRAGMENT_INPUT_FOLDER = "/home/jahn/Desktop/fp/ppt/fragments/";
 	// NA vazw ta full fingerprints otan thelw na kanw copy-paste ta classified as TEXT fragments
 	
-/*	private final static String[] typePaths = {"pdf","doc","xls","pdf","doc","xls","pdf","doc","xls","pdf","doc","xls",
-		"pdf","doc","xls","pdf","doc","xls","pdf","doc","xls","pdf","doc","xls","pdf",
-		"doc","xls","pdf","doc","xls","pdf","doc","xls","pdf","doc","xls","pdf","doc","xls","pdf","doc","xls"};
-*/
+	private final static String[] typePaths = {"mp4"};
 
-	/*private final static String[] typePaths = {"doc","xls","pdf","doc","xls","pdf","xls","pdf","doc","pdf","doc","pdf","doc","pdf","doc"
-		,"pdf","doc","pdf","doc","pdf","doc","pdf","doc","pdf","doc","pdf","doc","pdf","doc","pdf","doc"};
-	*/
 	private final static List<String[]> fingerprints = new ArrayList<String[]>();
-	private static Results results;
+	private static Results2 results;       /////////////////////////////////////////////////////////////////// Exw Result2 malaka
 	
 	static{
 		fingerprints.add(FingerPrintPaths.getPdfFPPaths());
@@ -47,12 +41,13 @@ public class Run {
 	
 	public static void main(String[] args) throws IOException {
 		for(String type : typePaths){
-		int numOffragments = 0;
 		FragmentFilePath paths = new FragmentFilePath("/home/jahn/Desktop/text_output/"+type+"/");
 		System.out.println("******* "+type);
+		System.out.print(paths.getAllPaths().size());
 		for (String path : paths.getAllPaths()) {
-			if(RatioFilter.checkRatio(75, 100, path)){
-			//numOffragments++;
+		//    long startTime = System.currentTimeMillis();
+
+		//	if(RatioFilter.checkRatio(0, 75, path)){
 			int index = 0;
 			float[] accuracies = new float[fingerprints.size()];
 			for (String[] fingerprint : fingerprints) {
@@ -64,10 +59,11 @@ public class Run {
 				accuracies[index++] = calculateAssuranceLevel(avgScore,corrStrengthScore, path);
 			}
 			AccuracyHolder holder = new AccuracyHolder(accuracies);
-			results = new Results(holder,path,type);
+			results = new Results2(holder,path);
 			results.set();
-			
-			}
+		//	long endTime = System.currentTimeMillis();
+		  //  System.out.println("Total execution time: " + (endTime-startTime) + "ms");
+			//}
 			
 		}
 	

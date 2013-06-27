@@ -17,6 +17,11 @@ public class CalculateEntropy {
 
 	}
 	
+	public static double getFragmentsEntropy(Integer[] fragment) throws IOException{
+		return calculateShannonEntropy(Distance.arrayToList(fragment));
+
+	}
+	
 	public static Integer[] getFragmentsContent(String path) throws IOException{
 		BufferedReader reader = new BufferedReader(new FileReader(path));
 		String line;
@@ -44,6 +49,8 @@ public class CalculateEntropy {
 	
 	
 	private static Double calculateShannonEntropy(List<Integer> fragment) {
+	  //  long startTime = System.currentTimeMillis();
+
 		  Map<Integer, Integer> map = new HashMap<Integer, Integer>();
 		  // count the occurrences of each value
 		  for (Integer sequence : fragment) {
@@ -59,8 +66,10 @@ public class CalculateEntropy {
 		    Double frequency = (double) map.get(sequence) / fragment.size();
 		    result -= frequency * (Math.log(frequency) / Math.log(2));
 		  }
-		 
+		//  long endTime = System.currentTimeMillis();
+		 // System.out.println("Total execution time: " + (endTime-startTime) + "ms");
 		  return result;
 		}
+	
 	
 }

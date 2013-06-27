@@ -8,7 +8,7 @@ import java.util.Map;
 import nl.cwi.bfd.fingerprint.io.reader.RatioFilter;
 import nl.cwi.counter.Counter;
 import nl.cwi.counter.IndividualZerosCounter;
-import nl.cwi.counter.StringsInFragments;
+import nl.cwi.counter.StringsInFragment;
 import nl.cwi.entropy.CalculateEntropy;
 import nl.cwi.lcs.XLS;
 
@@ -44,7 +44,10 @@ public class Results {
 	private  static int numOfIndieZeros;
 	private  static double ratio;
   private static double entropy;
-	
+
+ private static int j =0;
+ private static int tt =0;
+
 	private static double nullValueMetricDoc = 9;
 
 	
@@ -53,27 +56,22 @@ public class Results {
 		pdf = holder.getPDFAccuracy();
 		doc = holder.getDOCAccuracy();
 		xls = holder.getXLSAccuracy();
-		//ppt = holder.getPPTAccuracy();
-		ppt =0;
+		ppt = holder.getPPTAccuracy();
 		text = holder.getTEXTAccuracy();
-		//text =0;
-		//zip = holder.getZIPAccuracy();
-		zip=0;
-		//mp4 = holder.getMP4Accuracy();
-		mp4=0;
-		//jpg = holder.getJPGAccuracy();
-		jpg =0;
-		//png = holder.getPNGAccuracy();
-		png = 0;
-		//ogg = holder.getOGGAccuracy();
-		ogg =0;
+		zip = holder.getZIPAccuracy();
+		mp4 = holder.getMP4Accuracy();
+		jpg = holder.getJPGAccuracy();
+		png = holder.getPNGAccuracy();
+		ogg = holder.getOGGAccuracy();
+	
 		if (results.size() == 0) {
 			initMap();
 		}	
 		this.type = type;
-		numOfIndieZeros = IndividualZerosCounter.getNumOfIndieZeros(path).size();
-		ratio = RatioFilter.getFragmentsRatio(path);
-		entropy = CalculateEntropy.getFragmentsEntropy(path);
+		//numOfIndieZeros = IndividualZerosCounter.getNumOfIndieZeros(path).size();
+		//ratio = RatioFilter.getFragmentsRatio(path);
+		//entropy = CalculateEntropy.getFragmentsEntropy(path);
+		tt++;
 	}
 
 	public void set() throws IOException {
@@ -89,6 +87,7 @@ public class Results {
 		}
 		
 		for(String key : results.keySet()){
+			System.out.println(key+"  "+ results.get(key));
 			float percentage = (results.get(key) * 100f) / sum;
 			System.out.print(key+":"+percentage+"%, ");
 		}
@@ -129,17 +128,28 @@ public class Results {
 	
 	private void updateCounter(float max) throws IOException {
 		if (max == pdf){
+			System.out.println("pdf");
+			/*
 			int prevValue = results.get(PDF_TYPE);
 			results.put(PDF_TYPE, prevValue + 1);
+			System.out.println(++pdfIndex+" PDF");
+			*/
 			return;
 		}
 		if (max == doc){
+			System.out.println("doc");
+
+			/*
 			int prevValue = results.get(DOC_TYPE);
 			results.put(DOC_TYPE, prevValue + 1);
+			System.out.println(++docIndex+" DOC");
+	*/
 			return;
 		}
 		if (max == xls){
-		
+			System.out.println("xls");
+
+			/*
 			
 			if(firstCheck(entropy)){
 				if( numOfIndieZeros > 50  && ratio < 50  ){
@@ -164,36 +174,58 @@ public class Results {
 			}
 			int prevValue = results.get(DOC_TYPE);
 			results.put(DOC_TYPE, prevValue + 1);
+			*/
 			return;
 		}
 		if (max == ogg){
+			System.out.println("ogg");
+
+			/*
 			int prevValue = results.get(OGG_TYPE);
 			results.put(OGG_TYPE, prevValue + 1);
+			*/
 			return;
 		}
 		if (max == mp4){
+			System.out.println("mp4");
+
+			/*
 			int prevValue = results.get(MP4_TYPE);
 			results.put(MP4_TYPE, prevValue + 1);
+			*/
 			return;
 		}
 		if (max == png){
+			System.out.println("png");
+
+			/*
 			int prevValue = results.get(PNG_TYPE);
 			results.put(PNG_TYPE, prevValue + 1);
+			*/
 			return;
 		}
 		if (max == jpg){
+			System.out.println("jpg");
+
+			/*
 			int prevValue = results.get(JPG_TYPE);
 			results.put(JPG_TYPE, prevValue + 1);
 			//System.out.println(JPG_TYPE);
+			 * */
+			 
 			return;
 		}
 		if (max == zip){
+			System.out.println("zip");
+
+			/*
 			int prevValue = results.get(ZIP_TYPE);
 			results.put(ZIP_TYPE, prevValue + 1);
+			*/
 			return;
 		}
 		if (max == text){
-			double entropy = CalculateEntropy.getFragmentsEntropy(path);
+			/*double entropy = CalculateEntropy.getFragmentsEntropy(path);
 			if(numOfIndieZeros > 0 || entropy > 5 ){
 				
 				if(firstCheck(entropy)){
@@ -225,15 +257,66 @@ public class Results {
 			int prevValue = results.get(TEXT_TYPE);
 			results.put(TEXT_TYPE, prevValue + 1);
 			//FileCopy.copyTo(path);
+		*/
+			j++;
+			numOfIndieZeros = IndividualZerosCounter.getNumOfIndieZeros(path).size();
+			ratio = RatioFilter.getFragmentsRatio(path);
+			entropy = CalculateEntropy.getFragmentsEntropy(path);
+			if( ratio < 100 ){
+				
+				if( firstCheck(entropy)){
+					if( numOfIndieZeros > 50  && ratio < 50  ){
+						int prevValue = results.get(XLS_TYPE);
+						results.put(XLS_TYPE, prevValue + 1);
+					}
+					else if( pdf>doc && numOfIndieZeros <= nullValueMetricDoc  || entropy >= 5.8){
+						int prevValue = results.get(PDF_TYPE);
+						results.put(PDF_TYPE, prevValue + 1);
+					}
+					else {
+						int prevValue = results.get(DOC_TYPE);
+						results.put(DOC_TYPE, prevValue + 1);
+					}
+					return;
+				}
+				
+				if(numOfIndieZeros > 50 && ratio < 50){
+				int prevValue = results.get(XLS_TYPE);
+				results.put(XLS_TYPE, prevValue + 1);
+				return;
+				}
+				int prevValue = results.get(DOC_TYPE);
+				results.put(DOC_TYPE, prevValue + 1);
+				return;
+			}
+			
+			if(entropy < 6){
+			int prevValue = results.get(TEXT_TYPE);
+			results.put(TEXT_TYPE, prevValue + 1);
+			}
+			else if( pdf>doc && numOfIndieZeros <= nullValueMetricDoc  || entropy >= 5.8){
+				int prevValue = results.get(PDF_TYPE);
+				results.put(PDF_TYPE, prevValue + 1);
+			}
+			else {
+				int prevValue = results.get(DOC_TYPE);
+				results.put(DOC_TYPE, prevValue + 1);
+			}
+			
 		
 			 
 			return;
 		}
 		if (max == ppt){
+			System.out.println("ppt");
+
+			/*
 			int prevValue = results.get(PPT_TYPE);
 			results.put(PPT_TYPE, prevValue + 1);
+			*/
 			return;
 		}
+		System.out.println("other");
 
 		int prevValue = results.get(OTHER_TYPE);
 		results.put(OTHER_TYPE, prevValue + 1);
@@ -257,15 +340,13 @@ public class Results {
 	
 	public void clearResults(){
 		results.clear();
-		if(type.equals("xls")){
-			nullValueMetricDoc = nullValueMetricDoc+ 0.5;
-			System.out.println("MEtric value: "+nullValueMetricDoc);
-			
-		}
+		System.out.println(j);
+		System.out.println(tt);
+
+		j=0;
 	}
 	
 	private boolean firstCheck(double entropy) throws IOException{
-	
 		if( entropy >= ENTROPY ||  numOfIndieZeros <= nullValueMetricXls) return true;
 		
 		return false;

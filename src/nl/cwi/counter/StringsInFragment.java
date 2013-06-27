@@ -6,14 +6,14 @@ import java.util.List;
 
 import nl.cwi.entropy.CalculateEntropy;
 
-public class StringsInFragments {
+public class StringsInFragment {
 	private final static Integer NEWLINE = 10;
 	private final static Integer TAB = 9;
 	private final static Integer CARRIAGE_RETURN = 13;
 	private final static List<Integer> printableChars = new ArrayList<Integer>();
-	private final static int WORD_LENGTH = 5;
+	private final static int WORD_LENGTH = 10;
 	
-
+	static Integer[] list = {2,3,4,6,64,3,2,4,4,22,4,55,55,55,55,55,55,55,55,55,55,55,55,55,55,55,3,2,4,44,44,44,44,44,44,44,44,44,44,44,44,44,44,44,44,44,44,5,}; 
 
 	//** initialize array content comprised of all printables byte characters +
 	//** newline, tab and carriage_return
@@ -27,7 +27,7 @@ public class StringsInFragments {
 	}
 	
 	public static int getNumOfWordsInFragment(String path) throws IOException{
-		Integer[] fragment = CalculateEntropy.getFragmentsContent(path);
+		Integer[] fragment = list;
 		List<Integer> wordCounter = new ArrayList<Integer>();
 		boolean flag = false;
 		int wordLength = 0;
@@ -56,6 +56,7 @@ public class StringsInFragments {
 		if(wordLength >= WORD_LENGTH){
 			wordCounter.add(wordLength);
 		}
+		System.out.println(wordCounter.size());
 		return wordCounter.size();
 	}
 

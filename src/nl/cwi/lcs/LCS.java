@@ -7,7 +7,8 @@ import nl.cwi.entropy.CalculateEntropy;
 public class LCS {
 
 	public static String longestSubstring(String str1, String str2) {
-		 
+	    long startTime = System.currentTimeMillis();
+
 		StringBuilder sb = new StringBuilder();
 		if (str1 == null || str1.isEmpty() || str2 == null || str2.isEmpty())
 		  return "";
@@ -43,9 +44,46 @@ public class LCS {
 		   }
 		}
 		}}
-		 
+		long endTime = System.currentTimeMillis();
+	    System.out.println("Total execution time: " + (endTime-startTime) + "ms");
 		return sb.toString();
 		}
+	
+	
+	public static int getLCSLength(String first, String second) {
+	    long startTime = System.currentTimeMillis();
+
+		
+	  
+	 
+	    int maxLen = 0;
+	    int fl = 512;
+	   // int fl = first.length();
+
+	    int sl = second.length();
+	    int[][] table = new int[fl][sl];
+	 
+	    for (int i = 0; i < fl; i++) {
+	        for (int j = 0; j < sl; j++) {
+	            if (first.charAt(i) == second.charAt(j)) {
+	                if (i == 0 || j == 0) {
+	                    table[i][j] = 1;
+	                }
+	                else {
+	                    table[i][j] = table[i - 1][j - 1] + 1;
+	                }
+	                if (table[i][j] > maxLen) {
+	                    maxLen = table[i][j];
+	                }
+	            }
+	        }
+	    }
+	   
+	    long endTime = System.currentTimeMillis();
+	    System.out.println("Total execution time: " + (endTime-startTime) + "ms");
+	    return maxLen;
+	}
+	
 	
 	private static String getSubstring( String[] str, int lastSubsBegin, int lastIndex){
 		String temp = null;
