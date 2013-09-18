@@ -16,7 +16,7 @@ import nl.cwi.fragmentor.io.FragmentFilePath;
 
 public class Run {
 
-	private final static String[] typePaths = {"mp4","pdf","text","doc","xls","zip","ppt","ogg","png","jpg"};
+	private final static String[] typePaths = {"new"};
 	//private final static String FRAGMENT_INPUT_FOLDER = "/home/jahn/Desktop/fp/mp4/fragments/";
 	// NA vazw ta full fingerprints otan thelw na kanw copy-paste ta classified as TEXT fragments
 	
@@ -43,10 +43,10 @@ public class Run {
 	
 	public static void main(String[] args) throws IOException {
 		for(String type : typePaths){
-		FragmentFilePath paths = new FragmentFilePath("/home/jahn/Desktop/text_output/"+type+"/");
+		FragmentFilePath paths = new FragmentFilePath("/home/jahn/Desktop/corpus/"+type+"/"+"fragments/");
 		System.out.println("******* "+type);
 		 long startTime = System.currentTimeMillis();
-		for (String path : paths.getAllPaths()) {
+	   for (String path : paths.getAllPaths()) {	
 			int index = 0;
 			float[] accuracies = new float[fingerprints.size()];
 			for (String[] fingerprint : fingerprints) {

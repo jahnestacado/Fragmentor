@@ -2,19 +2,17 @@ package nl.cwi.bfd.algorithm;
 
 import java.io.File;
 import java.io.IOException;
-
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 
 
 public class FileCopy {
     public static void copyTo(String fromPath) {
-        //Copy file /foo/x.txt to /bar directory
         String source = fromPath;
         String [] temp = source.split("/");
         String fileName = temp[temp.length-1];
         String fileType = temp[temp.length-3];
-        String target = "/home/jahn/Desktop/text_output/"+fileType+"/"+fileName;
+        String target = "/home/jahn/Desktop/corpus/onlytext"+"/"+fileName;
         FileCopy.copyFile(source, target);
     }
 

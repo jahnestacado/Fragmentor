@@ -48,8 +48,13 @@ public class FragmentReader {
 	}
 	
 	
-	public static Map<String,Integer> getFragmentsFreqs(String path) throws IOException{
-		BufferedReader reader = new BufferedReader(new FileReader(path));
+	public static Map<String,Integer> getFragmentsFreqs(String path) throws NumberFormatException, IOException {
+		BufferedReader reader = null;
+		try {
+			reader = new BufferedReader(new FileReader(path));
+		} catch (FileNotFoundException e) {
+			System.out.println(path);
+		}
 		String line;
 		int index = 0;
 		Integer[] rawFragment = new Integer[FRAGMENT_SIZE];

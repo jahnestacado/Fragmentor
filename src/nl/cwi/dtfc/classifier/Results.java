@@ -29,18 +29,22 @@ public class Results {
 	private final static Map<String,Integer> results = new HashMap<String, Integer>();
 	private final String path;
 	private final String type;
-	private static int nullValueMetricXls = 25;
-	private static float COMPRESSED_FRAGMENT_ENTROPY = 3.9f;
+
+
+    private static int j =0;
+    private final Integer[] fragmentStream;
+    
+    
 	private  static int numOfIndieNullBytes;
 	private  static double ratio;
     private static double entropy;
-    private static int j =0;
-    private final Integer[] fragmentStream;
 	private static double LOW_NUM_OF_NULL_BYTES = 9;
 	private final static float TEXT_MAX_ENTROPY = 6;
 	private final static float MAX_XLS_PLAIN_TEXT_CONCENTRATION = 50;
 	private final static float MIN_XLS_NUM_OF_NULL_BYTES= 50;
 	private final static float AVG_PDF_ENTROPY= 5.8f;
+	private static int nullValueMetricXls = 25;
+	private static float COMPRESSED_FRAGMENT_ENTROPY = 3.9f;
 
 	
 	public Results(AccuracyHolder holder, String path, String type,Integer[] fragmentStream) throws IOException{
@@ -104,28 +108,20 @@ public class Results {
 			
 			
 			if (ratio < 100) {
-				if (isProbablyNotXls(entropy)) {
-					if (numOfIndieNullBytes > MIN_XLS_NUM_OF_NULL_BYTES && ratio < MAX_XLS_PLAIN_TEXT_CONCENTRATION) {
-						setXls();
-					} else if (pdf > doc && numOfIndieNullBytes <= LOW_NUM_OF_NULL_BYTES || entropy >= AVG_PDF_ENTROPY) {
-						setPdf();
-					} else {
-						setDoc();
-					}
-					return;
-				}
-
-				if (numOfIndieNullBytes > MIN_XLS_NUM_OF_NULL_BYTES && ratio < MAX_XLS_PLAIN_TEXT_CONCENTRATION) {
+				if (isXLS()) {
 					setXls();
-					return;
+				} else if (isNotPdf(entropy)) {
+					setDoc();
+				} else if (isPDF()) {
+					setPdf();
+				} else {
+					setDoc();
 				}
-				setDoc();
-				return;
 			}
 
-			if (entropy < TEXT_MAX_ENTROPY) {
+			else if (entropy < TEXT_MAX_ENTROPY) {
 				setText();
-			} else if (pdf > doc && numOfIndieNullBytes <= LOW_NUM_OF_NULL_BYTES || entropy >= AVG_PDF_ENTROPY) {
+			} else if (isPDF()) {
 				setPdf();
 			} else {
 				setDoc();
@@ -134,9 +130,18 @@ public class Results {
 		}
 	}
 	
-	private boolean isProbablyNotXls(double entropy) throws IOException{
-		if( entropy >= COMPRESSED_FRAGMENT_ENTROPY ||  numOfIndieNullBytes <= nullValueMetricXls) return true;
-		return false;
+	private boolean isXLS(){
+		return numOfIndieNullBytes > MIN_XLS_NUM_OF_NULL_BYTES && ratio < MAX_XLS_PLAIN_TEXT_CONCENTRATION;
+	}
+	
+	
+	private boolean isPDF(){
+		return pdf > doc && numOfIndieNullBytes <= LOW_NUM_OF_NULL_BYTES || entropy >= AVG_PDF_ENTROPY;
+	}
+	
+	
+	private boolean isNotPdf(double entropy) throws IOException{
+		return entropy <= COMPRESSED_FRAGMENT_ENTROPY &&  numOfIndieNullBytes >= nullValueMetricXls;
 	}
 
 	private void initMap(){

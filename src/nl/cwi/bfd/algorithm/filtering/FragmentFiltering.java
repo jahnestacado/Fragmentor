@@ -2,6 +2,7 @@ package nl.cwi.bfd.algorithm.filtering;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import nl.cwi.fragmentor.FragmentListFiltering;
 
 

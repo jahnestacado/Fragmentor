@@ -1,10 +1,5 @@
 package nl.cwi.sequencer;
 
-import java.io.IOException;
-import java.util.List;
-
-import nl.cwi.fragmentor.FragmentFactory;
-import nl.cwi.fragmentor.io.ReadFile;
 
 public class Main2 {
 

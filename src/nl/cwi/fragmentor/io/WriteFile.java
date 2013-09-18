@@ -82,7 +82,7 @@ public class WriteFile {
 		String name = fileName + "_" + index + "_" + fragmentSize + "_"
 				+ formatter.format(percentage) + "_" + fileType + ".ext";
 
-		this.path = "/home/jahn/Desktop/fp/" + currentFolder
+		this.path = "/home/jahn/Desktop/corpus/" + "new"
 				+ "/fragments/" + name;
 		
 		//this.path = "/media/jahn/1234-5678/thesis/"+name;

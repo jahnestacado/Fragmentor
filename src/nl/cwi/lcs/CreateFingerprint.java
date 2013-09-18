@@ -3,7 +3,6 @@ package nl.cwi.lcs;
 import java.io.IOException;
 import java.util.List;
 
-import nl.cwi.bfd.fingerprint.io.writer.SaveFingerprint;
 import nl.cwi.entropy.CalculateEntropy;
 import nl.cwi.fragmentor.io.FragmentFilePath;
 

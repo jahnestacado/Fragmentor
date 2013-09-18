@@ -1,17 +1,6 @@
 package nl.cwi.bfd.algorithm;
 
-import java.awt.Color;
-import java.io.File;
-import java.io.IOException;
 import java.util.List;
-
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartUtilities;
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.chart.renderer.category.BarRenderer;
-import org.jfree.data.statistics.HistogramDataset;
-import org.jfree.data.statistics.HistogramType;
 
 public class Graphs {
 
@@ -48,4 +37,6 @@ public class Graphs {
 
 		}
 	}
+	
+}
 }

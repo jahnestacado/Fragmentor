@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import nl.cwi.bfd.fingerprint.io.reader.RatioFilter;
 import nl.cwi.entropy.CalculateEntropy;
 
 public class IndividualZerosCounter {

@@ -1,8 +1,6 @@
 package nl.cwi.lcs;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 import nl.cwi.entropy.CalculateEntropy;
 

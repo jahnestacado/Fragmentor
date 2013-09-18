@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import nl.cwi.entropy.CalculateEntropy;
-
 public class StringsInFragment {
 	private final static Integer NEWLINE = 10;
 	private final static Integer TAB = 9;
